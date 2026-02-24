@@ -1,11 +1,10 @@
 {
-  "sections": {
-    "main": {
-      "type": "wf-stacks-index",
-      "settings": {}
-    }
-  },
-  "order": [
-    "main"
-  ]
+"sections": {
+"wf_stacks_index": {
+"type": "wf-stacks-index"
+}
+},
+"order": [
+"wf_stacks_index"
+]
 }
