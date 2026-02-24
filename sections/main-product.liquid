@@ -74,15 +74,44 @@
     </div>
   </div>
 </section>
+{% assign stack_widget_fallback_image = 'stack-collage-placeholder.svg' | asset_url %}
+{% if product.featured_image %}
+  {% assign stack_widget_fallback_image = product.featured_image | image_url: width: 800 %}
+{% endif %}
 <script>
   (function() {
     var jumpLink = document.querySelector('[data-stack-scroll]');
-    if (!jumpLink) return;
-    jumpLink.addEventListener('click', function(event) {
+    if (jumpLink) {
+      jumpLink.addEventListener('click', function(event) {
+        var target = document.getElementById('stack-options');
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    function patchStackOptionsImages() {
       var target = document.getElementById('stack-options');
       if (!target) return;
-      event.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var fallbackSrc = "{{ stack_widget_fallback_image }}";
+      var imgs = target.querySelectorAll('img');
+      if (!imgs.length) return;
+      imgs.forEach(function(img) {
+        var src = (img.getAttribute('src') || '').trim();
+        var brokenBySrc = !src || src.indexOf('placeholder') !== -1 || src.indexOf('no-image') !== -1 || src.indexOf('missing') !== -1;
+        if (brokenBySrc || img.naturalWidth === 0) {
+          img.setAttribute('src', fallbackSrc);
+          img.removeAttribute('srcset');
+          img.style.objectFit = 'contain';
+          img.style.background = 'transparent';
+        }
+      });
+    }
+
+    window.addEventListener('load', function() {
+      patchStackOptionsImages();
+      setTimeout(patchStackOptionsImages, 350);
+      setTimeout(patchStackOptionsImages, 1200);
     });
   })();
 </script>

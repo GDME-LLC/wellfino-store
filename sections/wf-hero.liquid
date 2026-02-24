@@ -1,6 +1,6 @@
-{% assign hero_background_url = section.settings.background_image | image_url: width: 1800 %}
+{% assign hero_background_url = section.settings.background_image | image_url: width: 2200 %}
 {% if section.settings.background_image == blank %}
-  {% assign hero_background_url = 'hero-lifestyle-placeholder.svg' | asset_url %}
+  {% assign hero_background_url = 'hero-lifestyle-fallback.png' | asset_url %}
 {% endif %}
 
 <section class="wf-hero">
