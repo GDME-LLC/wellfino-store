@@ -4,8 +4,21 @@
   {% assign stack_items = product_object.metafields.custom.stack_items.value | default: product_object.metafields.custom.stack_items %}
 {% endif %}
 {% assign rendered_stack_items = 0 %}
+{% assign collage_count = 0 %}
 
-<div class="wf-stack-collage{% if class_name != blank %} {{ class_name }}{% endif %}">
+{% if stack_items != blank %}
+  {% for stack_item in stack_items limit: 4 %}
+    {% if stack_item.featured_image %}
+      {% assign collage_count = collage_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if collage_count == 0 and product_object != blank and product_object.featured_image %}
+  {% assign collage_count = 1 %}
+{% endif %}
+
+<div class="wf-stack-collage wf-stack-collage--count-{{ collage_count }}{% if class_name != blank %} {{ class_name }}{% endif %}">
   {% if stack_items != blank %}
     {% for stack_item in stack_items limit: 4 %}
       {% if stack_item.featured_image %}
