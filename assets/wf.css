@@ -311,6 +311,15 @@ a:hover{text-decoration:underline}
 .wf-stack-collage--count-4 .wf-stack-collage__img--3{left:42%;right:auto;z-index:3;transform:translateY(1%)}
 .wf-stack-collage--count-4 .wf-stack-collage__img--4{right:0%;z-index:4;transform:translateY(2%)}
 .wf-stack-collage--pdp{aspect-ratio:4/3;background:#fff}
+.wf-stack-card .wf-stack-collage__img{
+  mix-blend-mode:normal;
+}
+.wf-stack-card .wf-stack-collage__img--1,
+.wf-stack-card .wf-stack-collage__img--2,
+.wf-stack-card .wf-stack-collage__img--3,
+.wf-stack-card .wf-stack-collage__img--4{
+  filter:drop-shadow(0 12px 18px rgba(20,20,20,.14));
+}
 .wf-stack-hero{
   display:grid;
   grid-template-columns:1.1fr .9fr;
