@@ -1,0 +1,51 @@
+
+<section class="wf-section">
+  <div class="wf-wrap">
+    <div class="wf-section__head">
+      <h2 class="wf-section__title">{{ section.settings.title }}</h2>
+      <a class="wf-btn" href="{{ routes.all_products_collection_url }}">View all</a>
+    </div>
+
+    {%- assign palette = settings.wf_category_palette | split: ',' -%}
+    <div class="wf-grid">
+      {% for block in section.blocks %}
+        {% assign col = collections[block.settings.collection] %}
+        {% assign swatch = block.settings.swatch %}
+
+        {%- if swatch == blank -%}
+          {%- assign idx = forloop.index0 | modulo: palette.size -%}
+          {%- assign swatch = palette[idx] | strip -%}
+        {%- endif -%}
+
+        <a class="wf-tile" href="{{ col.url }}" style="--wf-swatch: {{ swatch }};">
+          <div class="wf-tile__swatch" aria-hidden="true"></div>
+          <h3>{{ col.title }}</h3>
+          <p>{{ block.settings.desc }}</p>
+          <span class="wf-btn wf-btn--ghost" style="width:fit-content;margin-top:auto;">Explore →</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "WF Category grid",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Shop by category" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "textarea", "id": "desc", "label": "Description", "default": "Short category description." },
+        { "type": "color", "id": "swatch", "label": "Optional swatch override (leave blank to auto-pick from palette)" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{ "name": "WF Category grid" }]
+}
+{% endschema %}

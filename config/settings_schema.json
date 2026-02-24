@@ -1,0 +1,64 @@
+[
+  {
+    "name": "Wellfino brand",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "wf_main_menu",
+        "label": "Main menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "color",
+        "id": "wf_bg",
+        "label": "Background",
+        "default": "#F6F3EE"
+      },
+      {
+        "type": "color",
+        "id": "wf_panel",
+        "label": "Panel",
+        "default": "#EEEAE2"
+      },
+      {
+        "type": "color",
+        "id": "wf_text",
+        "label": "Text",
+        "default": "#141414"
+      },
+      {
+        "type": "color",
+        "id": "wf_muted",
+        "label": "Muted text",
+        "default": "#5C5C5C"
+      },
+      {
+        "type": "color",
+        "id": "wf_border",
+        "label": "Border",
+        "default": "#D7D1C7"
+      },
+      {
+        "type": "color",
+        "id": "wf_accent",
+        "label": "Accent",
+        "default": "#B79B56"
+      },
+      {
+        "type": "range",
+        "id": "wf_radius",
+        "label": "Corner radius",
+        "min": 10,
+        "max": 28,
+        "step": 1,
+        "default": 18
+      },
+      {
+        "type": "text",
+        "id": "wf_category_palette",
+        "label": "Category swatch palette (comma-separated hex)",
+        "default": "#EEEAE2,#F6F3EE,#D7D1C7,#B79B56"
+      }
+    ]
+  }
+]

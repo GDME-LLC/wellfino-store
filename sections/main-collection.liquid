@@ -1,0 +1,19 @@
+
+<section class="wf-section">
+  <div class="wf-wrap">
+    <div class="wf-section__head">
+      <h1 class="wf-section__title">{{ collection.title }}</h1>
+    </div>
+
+    <div class="wf-grid">
+      {% for product in collection.products %}
+        <a class="wf-tile" href="{{ product.url }}">
+          <h3>{{ product.title }}</h3>
+          <p>{{ product.price | money }}</p>
+          <span class="wf-btn wf-btn--ghost" style="width:fit-content;margin-top:auto;">View →</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}{ "name": "Main collection", "settings": [] }{% endschema %}

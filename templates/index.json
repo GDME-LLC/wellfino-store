@@ -1,0 +1,95 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "wf-hero",
+      "settings": {
+        "kicker": "SCIENCE-BACKED. CLEAN. SIMPLE.",
+        "heading": "Wellness, Refined",
+        "subheading": "Curated formulas that work, in doses that matter, with ingredients you can trust.",
+        "primary_label": "Start Shopping",
+        "primary_url": "",
+        "secondary_label": "Browse Categories",
+        "secondary_url": ""
+      }
+    },
+    "1771550320bcee3cb4": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_9bf6023_WDdHqR": {
+          "type": "ai_gen_block_9bf6023",
+          "settings": {
+            "heading": "Shop by Category",
+            "heading_size": 32,
+            "heading_color": "#141414",
+            "heading_alignment": "center",
+            "heading_spacing": 30,
+            "desktop_width_percent": 100,
+            "section_padding": 40,
+            "columns_desktop": 4,
+            "columns_mobile": "1",
+            "gap": 20,
+            "card_height": 180,
+            "card_padding": 25,
+            "card_radius": 18,
+            "card_alignment": "center",
+            "show_swatches": false,
+            "swatch_size": 40,
+            "title_size": 18,
+            "title_weight": 600,
+            "description_size": 14,
+            "category_1_enabled": true,
+            "category_1_title": "Core Daily",
+            "category_1_description": "Your foundation starts here",
+            "category_1_url": "shopify://collections/core-daily",
+            "category_2_enabled": true,
+            "category_2_title": "Digest & Gut",
+            "category_2_description": "A healthy gut supports everything",
+            "category_2_url": "shopify://collections/digest-gut",
+            "category_3_enabled": true,
+            "category_3_title": "Calm, Mood & Sleep",
+            "category_3_description": "Rest and calm are essentials",
+            "category_3_url": "shopify://collections/calm-mood-sleep",
+            "category_4_enabled": true,
+            "category_4_title": "Focus & Cognition",
+            "category_4_description": "Sharpen your edge naturally",
+            "category_4_url": "shopify://collections/focus-cognition",
+            "category_5_enabled": true,
+            "category_5_title": "Immunity & Longevity",
+            "category_5_description": "Play the long game",
+            "category_5_url": "shopify://collections/immunity-longevity",
+            "category_6_enabled": true,
+            "category_6_title": "Active & Performance",
+            "category_6_description": "Fuel your body the way it deserves",
+            "category_6_url": "shopify://collections/active-performance",
+            "category_7_enabled": true,
+            "category_7_title": "Beauty & Structure",
+            "category_7_description": "True beauty radiates from within",
+            "category_7_url": "shopify://collections/beauty-structure",
+            "category_8_enabled": true,
+            "category_8_title": "Gummies",
+            "category_8_description": "Wellness without the pill fatigue",
+            "category_8_url": "shopify://collections/gummies"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_9bf6023_WDdHqR"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "1771550320bcee3cb4"
+  ]
+}

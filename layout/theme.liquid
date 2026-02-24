@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page_title }}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
+  {{ content_for_header }}
+  <style>
+    :root{
+      --wf-bg: {{ settings.wf_bg }};
+      --wf-panel: {{ settings.wf_panel }};
+      --wf-text: {{ settings.wf_text }};
+      --wf-muted: {{ settings.wf_muted }};
+      --wf-border: {{ settings.wf_border }};
+      --wf-accent: {{ settings.wf_accent }};
+      --wf-radius: {{ settings.wf_radius }}px;
+    }
+  </style>
+  {{ 'wf.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  {% section 'header' %}
+  <main id="MainContent">{{ content_for_layout }}</main>
+  {% section 'footer' %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+
+<header class="wf-header">
+  <div class="wf-wrap">
+    <div class="wf-header__row">
+      <a class="wf-brand" href="{{ routes.root_url }}">{{ shop.name }}</a>
+
+      <nav class="wf-nav" aria-label="Primary">
+        {% if linklists[settings.wf_main_menu] %}
+          {% for link in linklists[settings.wf_main_menu].links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        {% endif %}
+      </nav>
+
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a class="wf-btn wf-btn--ghost" href="{{ routes.cart_url }}">Cart{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</a>
+        <a class="wf-btn wf-btn--primary" href="{{ routes.all_products_collection_url }}">Browse all →</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{ "name": "Header", "settings": [] }
+{% endschema %}

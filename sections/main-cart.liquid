@@ -1,0 +1,38 @@
+
+<section class="wf-section">
+  <div class="wf-wrap">
+    <h1 class="wf-section__title">Cart</h1>
+
+    {% if cart.item_count == 0 %}
+      <p style="color:var(--wf-muted)">Your cart is empty.</p>
+      <a class="wf-btn wf-btn--primary" href="{{ routes.all_products_collection_url }}">Browse products →</a>
+    {% else %}
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px;">
+        {% for item in cart.items %}
+          <div class="wf-tile" style="flex-direction:row;align-items:center;justify-content:space-between;">
+            <div style="display:flex;gap:12px;align-items:center;">
+              {% if item.image %}
+                <img src="{{ item.image | image_url: width: 140 }}" alt="" style="width:70px;height:auto;border-radius:12px;border:1px solid var(--wf-border);" loading="lazy">
+              {% endif %}
+              <div>
+                <div style="font-weight:650;">{{ item.product.title }}</div>
+                <div style="color:var(--wf-muted);font-size:13px;">Qty: {{ item.quantity }}</div>
+              </div>
+            </div>
+            <div style="font-weight:650;">{{ item.final_line_price | money }}</div>
+          </div>
+        {% endfor %}
+
+        <div class="wf-tile" style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="color:var(--wf-muted);">Subtotal</div>
+          <div style="font-weight:750;">{{ cart.total_price | money }}</div>
+        </div>
+
+        <form action="{{ routes.cart_url }}" method="post">
+          <button class="wf-btn wf-btn--primary" type="submit" name="checkout" style="width:100%;">Checkout</button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% schema %}{ "name": "Main cart", "settings": [] }{% endschema %}

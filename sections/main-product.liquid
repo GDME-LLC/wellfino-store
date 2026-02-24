@@ -1,0 +1,32 @@
+
+<section class="wf-section">
+  <div class="wf-wrap">
+    <div class="wf-grid" style="grid-template-columns: 1.2fr 0.8fr;">
+      <div class="wf-tile">
+        {% if product.featured_image %}
+          <img
+            src="{{ product.featured_image | image_url: width: 1200 }}"
+            alt="{{ product.featured_image.alt | escape }}"
+            style="width:100%;height:auto;border-radius:var(--wf-radius);border:1px solid var(--wf-border);"
+            loading="lazy">
+        {% endif %}
+        {% if product.description != blank %}
+          <div style="color:var(--wf-muted)">{{ product.description }}</div>
+        {% endif %}
+      </div>
+
+      <div class="wf-tile">
+        <h1 style="margin:0;font-size:26px;letter-spacing:-.02em;">{{ product.title }}</h1>
+        <p style="margin:0;color:var(--wf-muted)">{{ product.price | money }}</p>
+
+        {% form 'product', product %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button class="wf-btn wf-btn--primary" type="submit" style="width:100%;margin-top:12px;">Add to cart</button>
+        {% endform %}
+
+        <a class="wf-btn" href="{{ routes.cart_url }}" style="width:100%;">Go to cart</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}{ "name": "Main product", "settings": [] }{% endschema %}
