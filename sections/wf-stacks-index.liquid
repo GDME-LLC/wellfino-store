@@ -7,6 +7,10 @@
     <div class="wf-grid wf-stacks-grid">
       {% assign stack_1_handle = 'mens-core-essentials-stack' %}
       {% assign stack_1_product = all_products[stack_1_handle] %}
+      {% if stack_1_product == blank %}
+        {% assign stack_1_handle = 'mens-core-essentials' %}
+        {% assign stack_1_product = all_products[stack_1_handle] %}
+      {% endif %}
       <article class="wf-tile wf-stack-card">
         <a class="wf-stack-card__media" href="/products/{{ stack_1_handle }}">
           {% render 'wf-stack-collage', product_object: stack_1_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
@@ -18,6 +22,10 @@
 
       {% assign stack_2_handle = 'womens-core-essentials-stack' %}
       {% assign stack_2_product = all_products[stack_2_handle] %}
+      {% if stack_2_product == blank %}
+        {% assign stack_2_handle = 'womens-core-essentials' %}
+        {% assign stack_2_product = all_products[stack_2_handle] %}
+      {% endif %}
       <article class="wf-tile wf-stack-card">
         <a class="wf-stack-card__media" href="/products/{{ stack_2_handle }}">
           {% render 'wf-stack-collage', product_object: stack_2_product, class_name: 'wf-stack-collage--card', image_width: 900 %}

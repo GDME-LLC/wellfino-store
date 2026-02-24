@@ -12,7 +12,7 @@
     "hero": {
       "type": "wf-hero",
       "settings": {
-        "kicker": "SCIENCE-BACKED. CLEAN. SIMPLE.",
+        "kicker": "",
         "heading": "Shop Wellfino",
         "subheading": "Curated supplements and stacks built for everyday performance.",
         "primary_label": "Browse Stacks",

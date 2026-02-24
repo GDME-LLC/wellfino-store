@@ -7,7 +7,7 @@
 
 <div class="wf-stack-collage{% if class_name != blank %} {{ class_name }}{% endif %}">
   {% if stack_items != blank %}
-    {% for stack_item in stack_items limit: 3 %}
+    {% for stack_item in stack_items limit: 4 %}
       {% if stack_item.featured_image %}
         {% assign rendered_stack_items = rendered_stack_items | plus: 1 %}
         <img
