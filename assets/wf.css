@@ -31,22 +31,23 @@ a:hover{text-decoration:underline}
 .wf-btn--primary{background:var(--wf-text);border-color:var(--wf-text);color:var(--wf-bg)}
 .wf-btn--ghost{background:var(--wf-panel)}
 .wf-hero{padding:0 0 24px}
+.wf-hero .wf-wrap{max-width:none;padding:0}
 .wf-hero__card{
   position:relative;
-  border:1px solid var(--wf-border);
+  border:0;
   background:var(--wf-panel);
-  border-radius: calc(var(--wf-radius) * 1.4);
-  min-height:72vh;
+  border-radius:0;
+  min-height:86vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:clamp(34px,6vw,72px);
+  padding:clamp(44px,7vw,96px) clamp(24px,8vw,140px);
   overflow:hidden;
 }
 .wf-hero__card--has-bg{
-  background-image:linear-gradient(100deg, rgba(246,243,238,.78) 0%, rgba(246,243,238,.66) 48%, rgba(246,243,238,.52) 100%), var(--wf-hero-bg);
+  background-image:linear-gradient(105deg, rgba(246,243,238,.50) 0%, rgba(246,243,238,.36) 45%, rgba(246,243,238,.22) 100%), var(--wf-hero-bg);
   background-size:cover;
-  background-position:center;
+  background-position:center center;
 }
 .wf-hero__kicker{
   display:inline-flex;gap:10px;align-items:center;
@@ -261,7 +262,8 @@ a:hover{text-decoration:underline}
 .wf-stack-collage__img{
   display:block;
   object-fit:contain;
-  mix-blend-mode:multiply;
+  mix-blend-mode:darken;
+  background:transparent !important;
 }
 .wf-stack-collage__img--single{
   width:100%;
@@ -289,11 +291,11 @@ a:hover{text-decoration:underline}
 }
 .wf-stack-collage--count-2 .wf-stack-collage__img--1,
 .wf-stack-collage--count-2 .wf-stack-collage__img--2{
-  width:60%;
+  width:66%;
   bottom:0;
 }
-.wf-stack-collage--count-2 .wf-stack-collage__img--1{left:7%;z-index:1;transform:none}
-.wf-stack-collage--count-2 .wf-stack-collage__img--2{right:7%;left:auto;z-index:2;transform:none}
+.wf-stack-collage--count-2 .wf-stack-collage__img--1{left:3%;z-index:1;transform:none}
+.wf-stack-collage--count-2 .wf-stack-collage__img--2{right:3%;left:auto;z-index:2;transform:none}
 .wf-stack-collage--count-3 .wf-stack-collage__img--1{left:6%;z-index:1;transform:translateY(2%) scale(1.04)}
 .wf-stack-collage--count-3 .wf-stack-collage__img--2{left:28%;z-index:3;transform:scale(1.1)}
 .wf-stack-collage--count-3 .wf-stack-collage__img--3{right:6%;z-index:2;transform:translateY(2%) scale(1.04)}
@@ -377,7 +379,7 @@ a:hover{text-decoration:underline}
 }
 .wf-quality{gap:10px}
 @media (max-width:900px){
-  .wf-hero__card{min-height:60vh}
+  .wf-hero__card{min-height:66vh;padding:40px 22px}
   .wf-hero h1{font-size:clamp(40px,8vw,62px);max-width:16ch}
   .wf-hero p{font-size:16px}
   .wf-stack-hero{grid-template-columns:1fr}
