@@ -55,18 +55,23 @@
               {% endif %}
             </span>
             {% assign rating_value = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value | default: 0 %}
+            {% assign rating_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count | default: 0 %}
             {% assign rating_scaled = rating_value | times: 1.0 %}
-            {% assign rating_stars = rating_scaled | round %}
-            {% if rating_stars < 0 %}{% assign rating_stars = 0 %}{% endif %}
-            {% if rating_stars > 5 %}{% assign rating_stars = 5 %}{% endif %}
-            <span class="wf-product-card__rating">
-              <span class="wf-product-card__stars" aria-hidden="true">
-                {% for star in (1..5) %}
-                  {% if star <= rating_stars %}★{% else %}☆{% endif %}
-                {% endfor %}
+            {% if rating_count > 0 %}
+              {% assign rating_stars = rating_scaled | round %}
+              {% if rating_stars < 0 %}{% assign rating_stars = 0 %}{% endif %}
+              {% if rating_stars > 5 %}{% assign rating_stars = 5 %}{% endif %}
+              <span class="wf-product-card__rating">
+                <span class="wf-product-card__stars" aria-hidden="true">
+                  {% for star in (1..5) %}
+                    {% if star <= rating_stars %}&#9733;{% else %}&#9734;{% endif %}
+                  {% endfor %}
+                </span>
+                ({{ rating_scaled | round: 1 }}/5 · {{ rating_count }} reviews)
               </span>
-              ({{ rating_scaled | round: 1 }}/5)
-            </span>
+            {% else %}
+              <span class="wf-product-card__rating wf-product-card__rating--fallback">Third-party tested</span>
+            {% endif %}
             <span class="wf-product-card__view">View &rarr;</span>
           </div>
         </a>
