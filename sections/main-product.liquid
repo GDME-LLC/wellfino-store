@@ -134,15 +134,20 @@
         }
       });
 
-      var candidates = target.querySelectorAll("li, article, [class*='product'], [class*='item']");
+      var candidates = target.querySelectorAll("li, article, td, [class*='product'], [class*='item'], [class*='bundle']");
       candidates.forEach(function(node) {
         var text = (node.textContent || "").toLowerCase();
-        var isAnchorItem = currentProductTitleLower && text.indexOf(currentProductTitleLower) !== -1;
-        var isZeroPriceItem = /\$0(?:\.00)?/.test(text);
-        var isOutOfStockMessage = text.indexOf("out of stock") !== -1 || text.indexOf("sold out") !== -1;
-        if (isAnchorItem || isZeroPriceItem || isOutOfStockMessage) {
-          node.classList.add(hiddenClass);
-        }
+        var isAnchorTitleMatch = currentProductTitleLower && text.indexOf(currentProductTitleLower) !== -1;
+        var isZeroPrice = /\$0(?:\.00)?/.test(text);
+        if (!isAnchorTitleMatch || !isZeroPrice) return;
+
+        var hideNode =
+          node.closest("[class*='product']") ||
+          node.closest("[class*='item']") ||
+          node.closest("[class*='bundle']") ||
+          node;
+
+        hideNode.classList.add(hiddenClass);
       });
     }
 
@@ -161,5 +166,4 @@
   })();
 </script>
 
-{{ 'wf-stack-collage.js' | asset_url | script_tag }}
 {% schema %}{ "name": "Main product", "settings": [] }{% endschema %}
