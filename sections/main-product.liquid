@@ -18,6 +18,7 @@
       <div class="wf-tile">
         <h1 style="margin:0;font-size:26px;letter-spacing:-.02em;">{{ product.title }}</h1>
         <p style="margin:0;color:var(--wf-muted)">{{ product.price | money }}</p>
+        <a class="wf-btn wf-btn--ghost wf-stack-jump" href="#stack-options" data-stack-scroll style="width:100%;margin-top:12px;">View Stack Options</a>
 
         {% form 'product', product %}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
@@ -25,8 +26,27 @@
         {% endform %}
 
         <a class="wf-btn" href="{{ routes.cart_url }}" style="width:100%;">Go to cart</a>
+
+        <ul class="wf-trust-strip" aria-label="Wellfino trust standards">
+          <li>&#10003; Packaged in the USA</li>
+          <li>&#10003; Manufactured in FDA-Registered Facilities</li>
+          <li>&#10003; GMP-Certified Production</li>
+          <li>&#10003; Third-Party Tested for Quality</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
+<script>
+  (function() {
+    var jumpLink = document.querySelector('[data-stack-scroll]');
+    if (!jumpLink) return;
+    jumpLink.addEventListener('click', function(event) {
+      var target = document.getElementById('stack-options');
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  })();
+</script>
 {% schema %}{ "name": "Main product", "settings": [] }{% endschema %}

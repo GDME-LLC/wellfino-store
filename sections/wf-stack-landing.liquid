@@ -1,0 +1,14 @@
+<section class="wf-section">
+  <div class="wf-wrap">
+    <div data-stack-detail data-stack-handle="{{ page.handle }}" data-stacks-url="{{ 'stacks.json' | asset_url }}"></div>
+  </div>
+</section>
+
+{{ 'wf-stacks.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Stack landing",
+  "settings": []
+}
+{% endschema %}

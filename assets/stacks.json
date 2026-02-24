@@ -1,0 +1,192 @@
+[
+  {
+    "name": "Men's Core Essentials Stack",
+    "handle": "mens-core-essentials-stack",
+    "short_description": "Daily fundamentals for energy, resilience, and routine consistency.",
+    "why_it_matters": "A dependable daily stack helps remove guesswork and keeps your core nutrition routine simple.",
+    "includes": [
+      "Foundational daily support",
+      "Clean-label ingredient standards",
+      "Simple routine fit for busy schedules"
+    ],
+    "endpoint_type": "product",
+    "endpoint_handle": "replace-mens-core-essentials",
+    "endpoint_url": "/products/replace-mens-core-essentials",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "core"
+    ]
+  },
+  {
+    "name": "Women's Core Essentials Stack",
+    "handle": "womens-core-essentials-stack",
+    "short_description": "A daily baseline designed for whole-body wellness support.",
+    "why_it_matters": "Consistent basics can help make long-term wellness habits easier to maintain.",
+    "includes": [
+      "Everyday foundational support",
+      "Transparent, clean formulations",
+      "Convenient daily-use format"
+    ],
+    "endpoint_type": "product",
+    "endpoint_handle": "replace-womens-core-essentials",
+    "endpoint_url": "/products/replace-womens-core-essentials",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "core"
+    ]
+  },
+  {
+    "name": "Sleep Stack",
+    "handle": "sleep-stack",
+    "short_description": "Evening support to help you build a calm, repeatable wind-down routine.",
+    "why_it_matters": "A clear nighttime routine can make it easier to stay consistent with recovery habits.",
+    "includes": [
+      "Evening routine support",
+      "Low-friction supplement plan",
+      "Habit-friendly stack format"
+    ],
+    "endpoint_type": "collection",
+    "endpoint_handle": "replace-sleep-stack",
+    "endpoint_url": "/collections/replace-sleep-stack",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "sleep"
+    ]
+  },
+  {
+    "name": "Gut Stack",
+    "handle": "gut-stack",
+    "short_description": "A simple daily approach to digestive and microbiome support.",
+    "why_it_matters": "Digestive consistency often starts with a focused routine and clear product selection.",
+    "includes": [
+      "Digestive-focused support",
+      "Clean ingredient profiles",
+      "Daily routine compatibility"
+    ],
+    "endpoint_type": "collection",
+    "endpoint_handle": "replace-gut-stack",
+    "endpoint_url": "/collections/replace-gut-stack",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "gut"
+    ]
+  },
+  {
+    "name": "Performance Stack",
+    "handle": "performance-stack",
+    "short_description": "Daily support for training days, output, and recovery rhythm.",
+    "why_it_matters": "Performance goals are easier to track when your supplementation is organized and repeatable.",
+    "includes": [
+      "Training-day support",
+      "Recovery-friendly routine",
+      "Structured daily use"
+    ],
+    "endpoint_type": "collection",
+    "endpoint_handle": "replace-performance-stack",
+    "endpoint_url": "/collections/replace-performance-stack",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "active"
+    ]
+  },
+  {
+    "name": "Stress + Recovery Stack",
+    "handle": "stress-recovery-stack",
+    "short_description": "Targeted support for calm focus and day-to-day balance.",
+    "why_it_matters": "A practical stress-and-recovery routine can improve consistency across work and wellness habits.",
+    "includes": [
+      "Calm and balance support",
+      "Routine-ready stack format",
+      "Simple daily cadence"
+    ],
+    "endpoint_type": "collection",
+    "endpoint_handle": "replace-stress-recovery-stack",
+    "endpoint_url": "/collections/replace-stress-recovery-stack",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "recovery"
+    ]
+  },
+  {
+    "name": "Immunity Stack",
+    "handle": "immunity-stack",
+    "short_description": "Core daily support to help you stay ready year-round.",
+    "why_it_matters": "Immunity routines work best when they are simple enough to maintain over time.",
+    "includes": [
+      "Daily immune-support focus",
+      "Straightforward stack design",
+      "Year-round routine support"
+    ],
+    "endpoint_type": "collection",
+    "endpoint_handle": "replace-immunity-stack",
+    "endpoint_url": "/collections/replace-immunity-stack",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "immunity"
+    ]
+  },
+  {
+    "name": "Energy + Focus Stack",
+    "handle": "energy-focus-stack",
+    "short_description": "Clean daily support for productivity, clarity, and momentum.",
+    "why_it_matters": "Clear routines can help reduce decision fatigue around energy and focus support.",
+    "includes": [
+      "Daytime focus support",
+      "Productivity-first stack format",
+      "Simple everyday usage"
+    ],
+    "endpoint_type": "collection",
+    "endpoint_handle": "replace-energy-focus-stack",
+    "endpoint_url": "/collections/replace-energy-focus-stack",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "focus"
+    ]
+  },
+  {
+    "name": "Beauty / Glow Stack",
+    "handle": "beauty-glow-stack",
+    "short_description": "Inside-out daily support for skin, hair, and overall glow.",
+    "why_it_matters": "Consistency and clean formulations are key when building beauty-focused wellness routines.",
+    "includes": [
+      "Beauty-support essentials",
+      "Daily routine integration",
+      "Clean-label product selection"
+    ],
+    "endpoint_type": "collection",
+    "endpoint_handle": "replace-beauty-glow-stack",
+    "endpoint_url": "/collections/replace-beauty-glow-stack",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "beauty"
+    ]
+  },
+  {
+    "name": "Joint + Mobility Stack",
+    "handle": "joint-mobility-stack",
+    "short_description": "Daily support designed to keep movement routines consistent.",
+    "why_it_matters": "Mobility-focused habits are easier to maintain with a concise and repeatable stack.",
+    "includes": [
+      "Joint and mobility support",
+      "Daily consistency focus",
+      "Minimal-friction stack setup"
+    ],
+    "endpoint_type": "collection",
+    "endpoint_handle": "replace-joint-mobility-stack",
+    "endpoint_url": "/collections/replace-joint-mobility-stack",
+    "hero_image": "",
+    "tags": [
+      "placeholder-handle",
+      "mobility"
+    ]
+  }
+]

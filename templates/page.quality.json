@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "wf-quality",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

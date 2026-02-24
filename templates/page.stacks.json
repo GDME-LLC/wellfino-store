@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "wf-stacks-index",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

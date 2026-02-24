@@ -1,0 +1,18 @@
+<section class="wf-section">
+  <div class="wf-wrap">
+    <div class="wf-section__head">
+      <h1 class="wf-section__title wf-page-title">Stacks</h1>
+    </div>
+    <p class="wf-page-intro">Build your routine faster with curated stack pathways for core wellness goals.</p>
+    <div class="wf-grid wf-stacks-grid" data-stacks-index data-stacks-url="{{ 'stacks.json' | asset_url }}"></div>
+  </div>
+</section>
+
+{{ 'wf-stacks.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Stacks index",
+  "settings": []
+}
+{% endschema %}

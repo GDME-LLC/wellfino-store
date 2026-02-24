@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "wf-stack-landing",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
