@@ -67,10 +67,8 @@
                     {% if star <= rating_stars %}&#9733;{% else %}&#9734;{% endif %}
                   {% endfor %}
                 </span>
-                ({{ rating_scaled | round: 1 }}/5 · {{ rating_count }} reviews)
+                ({{ rating_scaled | round: 1 }}/5 &middot; {{ rating_count }} reviews)
               </span>
-            {% else %}
-              <span class="wf-product-card__rating wf-product-card__rating--fallback">Third-party tested</span>
             {% endif %}
             <span class="wf-product-card__view">View &rarr;</span>
           </div>
