@@ -21,6 +21,52 @@
           </div>
           <div class="wf-product-card__content">
             <h3>{{ product.title }}</h3>
+            {% assign meta_list = '' %}
+            {% assign meta_count = 0 %}
+            {% for rel_collection in product.collections %}
+              {% if rel_collection.handle != collection.handle %}
+                {% assign meta_count = meta_count | plus: 1 %}
+                {% if meta_count <= 2 %}
+                  {% if meta_list != blank %}
+                    {% assign meta_list = meta_list | append: ', ' %}
+                  {% endif %}
+                  {% assign meta_list = meta_list | append: rel_collection.title %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            {% if meta_count == 0 and product.tags.size > 0 %}
+              {% assign meta_list = '' %}
+              {% assign meta_count = 0 %}
+              {% for tag in product.tags %}
+                {% assign meta_count = meta_count | plus: 1 %}
+                {% if meta_count <= 2 %}
+                  {% if meta_list != blank %}
+                    {% assign meta_list = meta_list | append: ', ' %}
+                  {% endif %}
+                  {% assign meta_list = meta_list | append: tag %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            <span class="wf-product-card__meta">
+              {% if meta_list != blank %}
+                {{ meta_list }}{% if meta_count > 2 %} + {{ meta_count | minus: 2 }} more{% endif %}
+              {% else %}
+                Foundational wellness support
+              {% endif %}
+            </span>
+            {% assign rating_value = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value | default: 0 %}
+            {% assign rating_scaled = rating_value | times: 1.0 %}
+            {% assign rating_stars = rating_scaled | round %}
+            {% if rating_stars < 0 %}{% assign rating_stars = 0 %}{% endif %}
+            {% if rating_stars > 5 %}{% assign rating_stars = 5 %}{% endif %}
+            <span class="wf-product-card__rating">
+              <span class="wf-product-card__stars" aria-hidden="true">
+                {% for star in (1..5) %}
+                  {% if star <= rating_stars %}★{% else %}☆{% endif %}
+                {% endfor %}
+              </span>
+              ({{ rating_scaled | round: 1 }}/5)
+            </span>
             <span class="wf-product-card__view">View &rarr;</span>
           </div>
         </a>

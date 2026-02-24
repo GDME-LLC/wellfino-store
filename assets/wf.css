@@ -122,6 +122,22 @@ a:hover{text-decoration:underline}
   line-height:1.2;
   letter-spacing:-.01em;
 }
+.wf-product-card__meta{
+  color:var(--wf-muted);
+  font-size:13px;
+  line-height:1.35;
+}
+.wf-product-card__rating{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+}
+.wf-product-card__stars{
+  letter-spacing:.06em;
+  font-size:16px;
+  line-height:1;
+}
 .wf-product-card__view{
   color:var(--wf-muted);
   font-size:14px;
