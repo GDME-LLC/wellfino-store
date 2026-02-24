@@ -5,35 +5,70 @@
     </div>
     <p class="wf-page-intro">Purpose-built combinations designed for real results.</p>
     <div class="wf-grid wf-stacks-grid">
+      {% assign stack_1_handle = 'mens-core-essentials-stack' %}
+      {% assign stack_1_product = all_products[stack_1_handle] %}
       <article class="wf-tile wf-stack-card">
+        <a class="wf-stack-card__media" href="/products/{{ stack_1_handle }}">
+          {% render 'wf-stack-collage', product_object: stack_1_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
+        </a>
         <h3>Men&apos;s Core Essentials Stack</h3>
         <p>Daily fundamentals for a consistent, high-performance routine.</p>
-        <a class="wf-btn wf-btn--primary" href="/collections/mens-core-essentials">Shop Stack</a>
+        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_1_handle }}">Shop Stack</a>
       </article>
+
+      {% assign stack_2_handle = 'womens-core-essentials-stack' %}
+      {% assign stack_2_product = all_products[stack_2_handle] %}
       <article class="wf-tile wf-stack-card">
+        <a class="wf-stack-card__media" href="/products/{{ stack_2_handle }}">
+          {% render 'wf-stack-collage', product_object: stack_2_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
+        </a>
         <h3>Women&apos;s Core Essentials Stack</h3>
         <p>Clean daily support designed for whole-body wellness habits.</p>
-        <a class="wf-btn wf-btn--primary" href="/collections/womens-core-essentials">Shop Stack</a>
+        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_2_handle }}">Shop Stack</a>
       </article>
+
+      {% assign stack_3_handle = 'sleep-stack' %}
+      {% assign stack_3_product = all_products[stack_3_handle] %}
       <article class="wf-tile wf-stack-card">
+        <a class="wf-stack-card__media" href="/products/{{ stack_3_handle }}">
+          {% render 'wf-stack-collage', product_object: stack_3_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
+        </a>
         <h3>Sleep Stack</h3>
         <p>Evening-focused support to help anchor your nightly routine.</p>
-        <a class="wf-btn wf-btn--primary" href="/collections/sleep-stack">Shop Stack</a>
+        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_3_handle }}">Shop Stack</a>
       </article>
+
+      {% assign stack_4_handle = 'gut-stack' %}
+      {% assign stack_4_product = all_products[stack_4_handle] %}
       <article class="wf-tile wf-stack-card">
+        <a class="wf-stack-card__media" href="/products/{{ stack_4_handle }}">
+          {% render 'wf-stack-collage', product_object: stack_4_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
+        </a>
         <h3>Gut Stack</h3>
         <p>Digestive and microbiome support for everyday consistency.</p>
-        <a class="wf-btn wf-btn--primary" href="/collections/gut-stack">Shop Stack</a>
+        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_4_handle }}">Shop Stack</a>
       </article>
+
+      {% assign stack_5_handle = 'performance-stack' %}
+      {% assign stack_5_product = all_products[stack_5_handle] %}
       <article class="wf-tile wf-stack-card">
+        <a class="wf-stack-card__media" href="/products/{{ stack_5_handle }}">
+          {% render 'wf-stack-collage', product_object: stack_5_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
+        </a>
         <h3>Performance Stack</h3>
         <p>Training and recovery support to keep momentum steady.</p>
-        <a class="wf-btn wf-btn--primary" href="/collections/performance-stack">Shop Stack</a>
+        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_5_handle }}">Shop Stack</a>
       </article>
+
+      {% assign stack_6_handle = 'stress-recovery-stack' %}
+      {% assign stack_6_product = all_products[stack_6_handle] %}
       <article class="wf-tile wf-stack-card">
+        <a class="wf-stack-card__media" href="/products/{{ stack_6_handle }}">
+          {% render 'wf-stack-collage', product_object: stack_6_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
+        </a>
         <h3>Stress + Recovery Stack</h3>
         <p>Targeted daily support for calm focus and recovery balance.</p>
-        <a class="wf-btn wf-btn--primary" href="/collections/stress-recovery-stack">Shop Stack</a>
+        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_6_handle }}">Shop Stack</a>
       </article>
     </div>
   </div>

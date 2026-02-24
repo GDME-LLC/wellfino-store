@@ -30,11 +30,7 @@
                 alt="{{ product.featured_image.alt | default: product.title | escape }}"
                 loading="lazy">
             {% elsif is_stack_anchor %}
-              <img
-                class="wf-product-card__img"
-                src="{{ 'stack-placeholder.svg' | asset_url }}"
-                alt="{{ product.title | escape }}"
-                loading="lazy">
+              {% render 'wf-stack-collage', product_object: product, image_width: 900 %}
             {% else %}
               <div class="wf-product-card__img wf-product-card__img--placeholder" aria-hidden="true">No Image</div>
             {% endif %}

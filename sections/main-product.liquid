@@ -25,11 +25,9 @@
             style="width:100%;height:auto;border-radius:var(--wf-radius);border:1px solid var(--wf-border);"
             loading="lazy">
         {% elsif is_stack_anchor %}
-          <img
-            src="{{ 'stack-placeholder.svg' | asset_url }}"
-            alt="{{ product.title | escape }}"
-            style="width:100%;height:auto;border-radius:var(--wf-radius);border:1px solid var(--wf-border);"
-            loading="lazy">
+          <div style="border:1px solid var(--wf-border);border-radius:var(--wf-radius);background:#f4f5f7;overflow:hidden;">
+            {% render 'wf-stack-collage', product_object: product, class_name: 'wf-stack-collage--pdp', image_width: 1200 %}
+          </div>
         {% endif %}
         {% if product.description != blank %}
           <div style="color:var(--wf-muted)">{{ product.description }}</div>

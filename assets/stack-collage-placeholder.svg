@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Stack collage placeholder">
+  <rect width="1200" height="900" rx="40" fill="#f2f4f7"/>
+  <g opacity="0.95">
+    <rect x="220" y="200" width="340" height="540" rx="160" fill="#ffffff" stroke="#d7dbe1" stroke-width="8"/>
+    <rect x="640" y="240" width="300" height="500" rx="145" fill="#ffffff" stroke="#d7dbe1" stroke-width="8"/>
+    <rect x="470" y="300" width="290" height="430" rx="140" fill="#ffffff" stroke="#d7dbe1" stroke-width="8"/>
+  </g>
+  <g opacity="0.14">
+    <circle cx="300" cy="220" r="94" fill="#8dc9ff"/>
+    <circle cx="768" cy="246" r="82" fill="#8de0b4"/>
+    <circle cx="622" cy="322" r="76" fill="#ffd197"/>
+  </g>
+</svg>

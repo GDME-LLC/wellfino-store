@@ -1,0 +1,34 @@
+{% assign collage_width = image_width | default: 900 %}
+{% assign stack_items = product_object.metafields.custom.stack_items.value | default: product_object.metafields.custom.stack_items %}
+{% assign rendered_stack_items = 0 %}
+
+<div class="wf-stack-collage{% if class_name != blank %} {{ class_name }}{% endif %}">
+  {% if stack_items != blank %}
+    {% for stack_item in stack_items limit: 3 %}
+      {% if stack_item.featured_image %}
+        {% assign rendered_stack_items = rendered_stack_items | plus: 1 %}
+        <img
+          class="wf-stack-collage__img wf-stack-collage__img--{{ forloop.index }}"
+          src="{{ stack_item.featured_image | image_url: width: collage_width }}"
+          alt="{{ stack_item.title | escape }}"
+          loading="lazy">
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if rendered_stack_items == 0 and product_object.featured_image %}
+    <img
+      class="wf-stack-collage__img wf-stack-collage__img--single"
+      src="{{ product_object.featured_image | image_url: width: collage_width }}"
+      alt="{{ product_object.featured_image.alt | default: product_object.title | escape }}"
+      loading="lazy">
+  {% endif %}
+
+  {% if rendered_stack_items == 0 and product_object.featured_image == blank %}
+    <img
+      class="wf-stack-collage__img wf-stack-collage__img--single"
+      src="{{ 'stack-collage-placeholder.svg' | asset_url }}"
+      alt="{{ product_object.title | default: 'Stack image placeholder' | escape }}"
+      loading="lazy">
+  {% endif %}
+</div>
