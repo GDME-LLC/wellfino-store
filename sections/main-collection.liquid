@@ -4,24 +4,24 @@
       <h1 class="wf-section__title">{{ collection.title }}</h1>
     </div>
 
-    <div class="wf-grid">
+    <div class="wf-grid wf-product-grid">
       {% for product in collection.products %}
-        <a class="wf-tile wf-product-card" href="{{ product.url }}">
+        <a class="wf-product-card" href="{{ product.url }}">
           <div class="wf-product-card__media">
             {% if product.featured_image %}
               <img
                 class="wf-product-card__img"
-                src="{{ product.featured_image | image_url: width: 220 }}"
+                src="{{ product.featured_image | image_url: width: 720 }}"
                 alt="{{ product.featured_image.alt | default: product.title | escape }}"
                 loading="lazy">
             {% else %}
               <div class="wf-product-card__img wf-product-card__img--placeholder" aria-hidden="true">No Image</div>
             {% endif %}
+            <span class="wf-product-card__price">{{ product.price | money }}</span>
           </div>
           <div class="wf-product-card__content">
             <h3>{{ product.title }}</h3>
-            <p>{{ product.price | money }}</p>
-            <span class="wf-btn wf-btn--ghost" style="width:fit-content;margin-top:auto;">View &rarr;</span>
+            <span class="wf-product-card__view">View &rarr;</span>
           </div>
         </a>
       {% endfor %}
