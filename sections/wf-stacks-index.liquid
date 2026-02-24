@@ -4,6 +4,7 @@
       <h1 class="wf-section__title wf-page-title">Curated Supplement Stacks</h1>
     </div>
     <p class="wf-page-intro">Purpose-built combinations designed for real results.</p>
+
     <div class="wf-grid wf-stacks-grid">
       {% assign stack_1_handle = 'mens-core-essentials-stack' %}
       {% assign stack_1_product = all_products[stack_1_handle] %}
@@ -11,14 +12,22 @@
         {% assign stack_1_handle = 'mens-core-essentials' %}
         {% assign stack_1_product = all_products[stack_1_handle] %}
       {% endif %}
-      <article class="wf-tile wf-stack-card">
-        <a class="wf-stack-card__media" href="/products/{{ stack_1_handle }}">
+      <a class="wf-tile wf-stack-card" href="/products/{{ stack_1_handle }}">
+        <div class="wf-stack-card__media">
           {% render 'wf-stack-collage', product_object: stack_1_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
-        </a>
+        </div>
+        <div class="wf-stack-card__pill">10% savings</div>
         <h3>Men&apos;s Core Essentials Stack</h3>
         <p>Foundational daily support for consistency and performance.</p>
-        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_1_handle }}">Shop Stack</a>
-      </article>
+        <div class="wf-stack-card__price-row">
+          {% if stack_1_product != blank and stack_1_product.price > 0 %}
+            <span class="wf-stack-card__price">From {{ stack_1_product.price | money }}</span>
+          {% else %}
+            <span class="wf-stack-card__price wf-stack-card__price--muted">Stack savings applied at checkout</span>
+          {% endif %}
+        </div>
+        <span class="wf-btn wf-btn--primary wf-stack-card__cta">Shop Stack</span>
+      </a>
 
       {% assign stack_2_handle = 'womens-core-essentials-stack' %}
       {% assign stack_2_product = all_products[stack_2_handle] %}
@@ -26,47 +35,79 @@
         {% assign stack_2_handle = 'womens-core-essentials' %}
         {% assign stack_2_product = all_products[stack_2_handle] %}
       {% endif %}
-      <article class="wf-tile wf-stack-card">
-        <a class="wf-stack-card__media" href="/products/{{ stack_2_handle }}">
+      <a class="wf-tile wf-stack-card" href="/products/{{ stack_2_handle }}">
+        <div class="wf-stack-card__media">
           {% render 'wf-stack-collage', product_object: stack_2_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
-        </a>
+        </div>
+        <div class="wf-stack-card__pill">10% savings</div>
         <h3>Women&apos;s Core Essentials Stack</h3>
         <p>Core nutrition support curated for everyday wellness routines.</p>
-        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_2_handle }}">Shop Stack</a>
-      </article>
+        <div class="wf-stack-card__price-row">
+          {% if stack_2_product != blank and stack_2_product.price > 0 %}
+            <span class="wf-stack-card__price">From {{ stack_2_product.price | money }}</span>
+          {% else %}
+            <span class="wf-stack-card__price wf-stack-card__price--muted">Stack savings applied at checkout</span>
+          {% endif %}
+        </div>
+        <span class="wf-btn wf-btn--primary wf-stack-card__cta">Shop Stack</span>
+      </a>
 
       {% assign stack_3_handle = 'mens-complete-system' %}
       {% assign stack_3_product = all_products[stack_3_handle] %}
-      <article class="wf-tile wf-stack-card">
-        <a class="wf-stack-card__media" href="/products/{{ stack_3_handle }}">
+      <a class="wf-tile wf-stack-card" href="/products/{{ stack_3_handle }}">
+        <div class="wf-stack-card__media">
           {% render 'wf-stack-collage', product_object: stack_3_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
-        </a>
+        </div>
+        <div class="wf-stack-card__pill">10% savings</div>
         <h3>Men&apos;s Complete System</h3>
         <p>Comprehensive stack built to streamline full daily support.</p>
-        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_3_handle }}">Shop Stack</a>
-      </article>
+        <div class="wf-stack-card__price-row">
+          {% if stack_3_product != blank and stack_3_product.price > 0 %}
+            <span class="wf-stack-card__price">From {{ stack_3_product.price | money }}</span>
+          {% else %}
+            <span class="wf-stack-card__price wf-stack-card__price--muted">Stack savings applied at checkout</span>
+          {% endif %}
+        </div>
+        <span class="wf-btn wf-btn--primary wf-stack-card__cta">Shop Stack</span>
+      </a>
 
       {% assign stack_4_handle = 'womens-complete-system' %}
       {% assign stack_4_product = all_products[stack_4_handle] %}
-      <article class="wf-tile wf-stack-card">
-        <a class="wf-stack-card__media" href="/products/{{ stack_4_handle }}">
+      <a class="wf-tile wf-stack-card" href="/products/{{ stack_4_handle }}">
+        <div class="wf-stack-card__media">
           {% render 'wf-stack-collage', product_object: stack_4_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
-        </a>
+        </div>
+        <div class="wf-stack-card__pill">10% savings</div>
         <h3>Women&apos;s Complete System</h3>
         <p>Complete, simplified stack support for all-day performance.</p>
-        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_4_handle }}">Shop Stack</a>
-      </article>
+        <div class="wf-stack-card__price-row">
+          {% if stack_4_product != blank and stack_4_product.price > 0 %}
+            <span class="wf-stack-card__price">From {{ stack_4_product.price | money }}</span>
+          {% else %}
+            <span class="wf-stack-card__price wf-stack-card__price--muted">Stack savings applied at checkout</span>
+          {% endif %}
+        </div>
+        <span class="wf-btn wf-btn--primary wf-stack-card__cta">Shop Stack</span>
+      </a>
 
       {% assign stack_5_handle = 'focus-cognition-stack' %}
       {% assign stack_5_product = all_products[stack_5_handle] %}
-      <article class="wf-tile wf-stack-card">
-        <a class="wf-stack-card__media" href="/products/{{ stack_5_handle }}">
+      <a class="wf-tile wf-stack-card" href="/products/{{ stack_5_handle }}">
+        <div class="wf-stack-card__media">
           {% render 'wf-stack-collage', product_object: stack_5_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
-        </a>
+        </div>
+        <div class="wf-stack-card__pill">10% savings</div>
         <h3>Focus &amp; Cognition Stack</h3>
         <p>Targeted support for clarity, concentration, and cognitive output.</p>
-        <a class="wf-btn wf-btn--primary" href="/products/{{ stack_5_handle }}">Shop Stack</a>
-      </article>
+        <div class="wf-stack-card__price-row">
+          {% if stack_5_product != blank and stack_5_product.price > 0 %}
+            <span class="wf-stack-card__price">From {{ stack_5_product.price | money }}</span>
+          {% else %}
+            <span class="wf-stack-card__price wf-stack-card__price--muted">Stack savings applied at checkout</span>
+          {% endif %}
+        </div>
+        <span class="wf-btn wf-btn--primary wf-stack-card__cta">Shop Stack</span>
+      </a>
     </div>
   </div>
 </section>

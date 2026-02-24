@@ -1,4 +1,3 @@
-
 <section class="wf-section">
   <div class="wf-wrap">
     {% assign product_type_down = product.type | downcase %}
@@ -8,61 +7,73 @@
     {% if product_type_down == 'stack' or product_tags_down contains 'stack' or product_title_down contains 'stack' or product_title_down contains 'system' %}
       {% assign is_stack_anchor = true %}
     {% endif %}
-    {% assign stack_price_override = false %}
-    {% assign stack_base_price = product.metafields.custom.stack_base_price.value | default: product.metafields.custom.stack_base_price %}
+
+    {% assign stack_display_price = product.metafields.custom.stack_display_price.value | default: product.metafields.custom.stack_display_price %}
+    {% assign stack_requires_options = false %}
     {% if is_stack_anchor %}
       {% if product.price <= 0 or product.available == false %}
-        {% assign stack_price_override = true %}
+        {% assign stack_requires_options = true %}
       {% endif %}
     {% endif %}
 
-    <div class="wf-grid" style="grid-template-columns: 1.2fr 0.8fr;">
+    <div class="wf-grid wf-product-hero">
       <div class="wf-tile">
-        {% if product.featured_image %}
-          <img
-            src="{{ product.featured_image | image_url: width: 1200 }}"
-            alt="{{ product.featured_image.alt | escape }}"
-            style="width:100%;height:auto;border-radius:var(--wf-radius);border:1px solid var(--wf-border);"
-            loading="lazy">
-        {% elsif is_stack_anchor %}
-          <div style="border:1px solid var(--wf-border);border-radius:var(--wf-radius);background:#f4f5f7;overflow:hidden;">
-            {% render 'wf-stack-collage', product_object: product, class_name: 'wf-stack-collage--pdp', image_width: 1200 %}
+        {% if is_stack_anchor %}
+          <div class="wf-product-hero__media">
+            {% render 'wf-stack-collage', product_object: product, class_name: 'wf-stack-collage--pdp', image_width: 1400 %}
           </div>
+        {% elsif product.featured_image %}
+          <img
+            src="{{ product.featured_image | image_url: width: 1400 }}"
+            alt="{{ product.featured_image.alt | escape }}"
+            class="wf-product-hero__image"
+            loading="lazy">
         {% endif %}
+
         {% if product.description != blank %}
-          <div style="color:var(--wf-muted)">{{ product.description }}</div>
+          <div class="wf-product-hero__description">{{ product.description }}</div>
         {% endif %}
       </div>
 
-      <div class="wf-tile">
-        <h1 style="margin:0;font-size:26px;letter-spacing:-.02em;">{{ product.title }}</h1>
+      <div class="wf-tile wf-product-hero__aside">
+        <h1 class="wf-product-hero__title">{{ product.title }}</h1>
         {% if is_stack_anchor %}
           <span class="wf-stack-badge">10% Stack Savings</span>
         {% endif %}
-        <p style="margin:0;color:var(--wf-muted)">
-          {% if stack_price_override %}
-            {% if stack_base_price != blank %}
-              {% assign stack_base_price_text = stack_base_price | append: '' %}
-              {% if stack_base_price_text contains '$' %}
-                From {{ stack_base_price_text }}
-              {% else %}
-                From ${{ stack_base_price_text }}
-              {% endif %}
+
+        <p class="wf-product-hero__price">
+          {% if is_stack_anchor %}
+            {% if stack_display_price != blank %}
+              From {{ stack_display_price | money }}
             {% else %}
-              Curated stack (10% savings)
+              10% savings &middot; Discount applied at checkout
             {% endif %}
           {% else %}
             {{ product.price | money }}
           {% endif %}
         </p>
-        <a class="wf-btn wf-btn--ghost wf-stack-jump" href="#stack-options" data-stack-scroll style="width:100%;margin-top:12px;">View Stack Options</a>
 
-        {% form 'product', product %}
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button class="wf-btn wf-btn--primary" type="submit" style="width:100%;margin-top:12px;">Add to cart</button>
-        {% endform %}
+        {% assign short_description = product.description | strip_html | strip_newlines | truncate: 140 %}
+        {% if short_description != blank %}
+          <p class="wf-product-hero__short">{{ short_description }}</p>
+        {% endif %}
 
-        <a class="wf-btn" href="{{ routes.cart_url }}" style="width:100%;">Go to cart</a>
+        <a class="wf-btn wf-btn--ghost wf-stack-jump" href="#stack-options" data-stack-scroll>View Stack Options</a>
+
+        {% if is_stack_anchor %}
+          <p class="wf-product-hero__availability-note">Stack availability depends on included items.</p>
+        {% endif %}
+
+        {% unless stack_requires_options %}
+          {% form 'product', product %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button class="wf-btn wf-btn--primary wf-product-hero__cart-btn" type="submit">Add to cart</button>
+          {% endform %}
+        {% else %}
+          <div class="wf-product-hero__option-note">Choose stack options below to build your discounted stack.</div>
+        {% endunless %}
+
+        <a class="wf-btn wf-product-hero__cart-link" href="{{ routes.cart_url }}">Go to cart</a>
 
         <ul class="wf-trust-strip" aria-label="Wellfino trust standards">
           <li>&#10003; Packaged in the USA</li>
@@ -74,46 +85,81 @@
     </div>
   </div>
 </section>
+
 {% assign stack_widget_fallback_image = 'stack-collage-placeholder.svg' | asset_url %}
 {% if product.featured_image %}
   {% assign stack_widget_fallback_image = product.featured_image | image_url: width: 800 %}
 {% endif %}
 <script>
   (function() {
-    var jumpLink = document.querySelector('[data-stack-scroll]');
-    if (jumpLink) {
-      jumpLink.addEventListener('click', function(event) {
-        var target = document.getElementById('stack-options');
+    var currentProductTitle = {{ product.title | json }};
+    var currentProductTitleLower = (currentProductTitle || "").toLowerCase();
+    var hiddenClass = "wf-stack-options__hidden-item";
+
+    function onJump() {
+      var jumpLink = document.querySelector("[data-stack-scroll]");
+      if (!jumpLink) return;
+      jumpLink.addEventListener("click", function(event) {
+        var target = document.getElementById("stack-options");
         if (!target) return;
         event.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
 
-    function patchStackOptionsImages() {
-      var target = document.getElementById('stack-options');
+    function isBundlerHeading(text) {
+      var t = (text || "").trim().toLowerCase();
+      return t === "get a discount!" || t === "get a discount" || t === "discount";
+    }
+
+    function patchStackOptions() {
+      var target = document.getElementById("stack-options");
       if (!target) return;
-      var fallbackSrc = "{{ stack_widget_fallback_image }}";
-      var imgs = target.querySelectorAll('img');
-      if (!imgs.length) return;
-      imgs.forEach(function(img) {
-        var src = (img.getAttribute('src') || '').trim();
-        var brokenBySrc = !src || src.indexOf('placeholder') !== -1 || src.indexOf('no-image') !== -1 || src.indexOf('missing') !== -1;
+      var fallbackSrc = {{ stack_widget_fallback_image | json }};
+
+      target.querySelectorAll("h1, h2, h3, h4").forEach(function(el) {
+        if (isBundlerHeading(el.textContent)) {
+          el.classList.add(hiddenClass);
+        }
+      });
+
+      target.querySelectorAll("img").forEach(function(img) {
+        var src = (img.getAttribute("src") || "").trim().toLowerCase();
+        var brokenBySrc = !src || src.indexOf("placeholder") !== -1 || src.indexOf("no-image") !== -1 || src.indexOf("missing") !== -1;
         if (brokenBySrc || img.naturalWidth === 0) {
-          img.setAttribute('src', fallbackSrc);
-          img.removeAttribute('srcset');
-          img.style.objectFit = 'contain';
-          img.style.background = 'transparent';
+          img.setAttribute("src", fallbackSrc);
+          img.removeAttribute("srcset");
+          img.style.objectFit = "contain";
+          img.style.background = "transparent";
+        }
+      });
+
+      var candidates = target.querySelectorAll("li, article, [class*='product'], [class*='item']");
+      candidates.forEach(function(node) {
+        var text = (node.textContent || "").toLowerCase();
+        var isAnchorItem = currentProductTitleLower && text.indexOf(currentProductTitleLower) !== -1;
+        var isZeroPriceItem = /\$0(?:\.00)?/.test(text);
+        var isOutOfStockMessage = text.indexOf("out of stock") !== -1 || text.indexOf("sold out") !== -1;
+        if (isAnchorItem || isZeroPriceItem || isOutOfStockMessage) {
+          node.classList.add(hiddenClass);
         }
       });
     }
 
-    window.addEventListener('load', function() {
-      patchStackOptionsImages();
-      setTimeout(patchStackOptionsImages, 350);
-      setTimeout(patchStackOptionsImages, 1200);
+    onJump();
+
+    window.addEventListener("load", function() {
+      patchStackOptions();
+      setTimeout(patchStackOptions, 350);
+      setTimeout(patchStackOptions, 1200);
+      var target = document.getElementById("stack-options");
+      if (!target) return;
+      var observer = new MutationObserver(function() { patchStackOptions(); });
+      observer.observe(target, { childList: true, subtree: true });
+      setTimeout(function() { observer.disconnect(); }, 15000);
     });
   })();
 </script>
+
 {{ 'wf-stack-collage.js' | asset_url | script_tag }}
 {% schema %}{ "name": "Main product", "settings": [] }{% endschema %}
