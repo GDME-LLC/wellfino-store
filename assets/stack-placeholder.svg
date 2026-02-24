@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="Stack placeholder image">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f4ef"/>
+      <stop offset="100%" stop-color="#ece6db"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <rect x="130" y="200" width="940" height="800" rx="52" fill="#ffffff" stroke="#d7d1c7" stroke-width="8"/>
+  <text x="600" y="540" font-family="Arial, Helvetica, sans-serif" font-size="66" text-anchor="middle" fill="#141414" letter-spacing="3">WELLFINO STACK</text>
+  <text x="600" y="620" font-family="Arial, Helvetica, sans-serif" font-size="34" text-anchor="middle" fill="#5c5c5c" letter-spacing="1.5">Curated supplements for daily performance</text>
+</svg>

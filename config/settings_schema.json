@@ -9,6 +9,11 @@
         "default": "main-menu"
       },
       {
+        "type": "image_picker",
+        "id": "wf_logo",
+        "label": "Logo image"
+      },
+      {
         "type": "color",
         "id": "wf_bg",
         "label": "Background",

@@ -1,12 +1,33 @@
 
 <section class="wf-section">
   <div class="wf-wrap">
+    {% assign product_type_down = product.type | downcase %}
+    {% assign product_title_down = product.title | downcase %}
+    {% assign product_tags_down = product.tags | join: ',' | downcase %}
+    {% assign is_stack_anchor = false %}
+    {% if product_type_down == 'stack' or product_tags_down contains 'stack' or product_title_down contains 'stack' or product_title_down contains 'system' %}
+      {% assign is_stack_anchor = true %}
+    {% endif %}
+    {% assign stack_price_override = false %}
+    {% assign stack_base_price = product.metafields.custom.stack_base_price.value | default: product.metafields.custom.stack_base_price %}
+    {% if is_stack_anchor %}
+      {% if product.price <= 0 or product.available == false %}
+        {% assign stack_price_override = true %}
+      {% endif %}
+    {% endif %}
+
     <div class="wf-grid" style="grid-template-columns: 1.2fr 0.8fr;">
       <div class="wf-tile">
         {% if product.featured_image %}
           <img
             src="{{ product.featured_image | image_url: width: 1200 }}"
             alt="{{ product.featured_image.alt | escape }}"
+            style="width:100%;height:auto;border-radius:var(--wf-radius);border:1px solid var(--wf-border);"
+            loading="lazy">
+        {% elsif is_stack_anchor %}
+          <img
+            src="{{ 'stack-placeholder.svg' | asset_url }}"
+            alt="{{ product.title | escape }}"
             style="width:100%;height:auto;border-radius:var(--wf-radius);border:1px solid var(--wf-border);"
             loading="lazy">
         {% endif %}
@@ -17,7 +38,25 @@
 
       <div class="wf-tile">
         <h1 style="margin:0;font-size:26px;letter-spacing:-.02em;">{{ product.title }}</h1>
-        <p style="margin:0;color:var(--wf-muted)">{{ product.price | money }}</p>
+        {% if is_stack_anchor %}
+          <span class="wf-stack-badge">10% Stack Savings</span>
+        {% endif %}
+        <p style="margin:0;color:var(--wf-muted)">
+          {% if stack_price_override %}
+            {% if stack_base_price != blank %}
+              {% assign stack_base_price_text = stack_base_price | append: '' %}
+              {% if stack_base_price_text contains '$' %}
+                From {{ stack_base_price_text }}
+              {% else %}
+                From ${{ stack_base_price_text }}
+              {% endif %}
+            {% else %}
+              Curated stack (10% savings)
+            {% endif %}
+          {% else %}
+            {{ product.price | money }}
+          {% endif %}
+        </p>
         <a class="wf-btn wf-btn--ghost wf-stack-jump" href="#stack-options" data-stack-scroll style="width:100%;margin-top:12px;">View Stack Options</a>
 
         {% form 'product', product %}

@@ -1,30 +1,6 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "hero": {
-      "type": "wf-hero",
-      "settings": {
-        "kicker": "SCIENCE-BACKED. CLEAN. SIMPLE.",
-        "heading": "Shop Wellfino",
-        "subheading": "Curated supplements and stacks built for everyday performance.",
-        "primary_label": "Browse Stacks",
-        "primary_url": "/pages/stacks",
-        "secondary_label": "Browse All",
-        "secondary_url": "/collections/all",
-        "background_image": "",
-        "back_link_label": "Back to Wellfino.com",
-        "back_link_url": "https:\/\/wellfino.com"
-      }
-    },
-    "1771550320bcee3cb4": {
+    "categories": {
       "type": "_blocks",
       "blocks": {
         "ai_gen_block_9bf6023_WDdHqR": {
@@ -92,7 +68,6 @@
     }
   },
   "order": [
-    "hero"
+    "categories"
   ]
 }
-
