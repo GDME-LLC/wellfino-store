@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "wf_logo": "shopify://shop_images/full_logo.jpg",
     "wf_radius": 10,
     "wf_category_palette": "#4EB0F4 #48E380 #9A8FD0 #38CFCB #F5CF65 #F5576C #FA709A #FEAEBC",
     "sections": {
