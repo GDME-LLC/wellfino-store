@@ -23,26 +23,20 @@
     {% for stack_item in stack_items limit: 4 %}
       {% if stack_item.featured_image %}
         {% assign rendered_stack_items = rendered_stack_items | plus: 1 %}
-        {% capture mapped_stack_item_image %}{% render 'wf-stack-image-url', item: stack_item %}{% endcapture %}
-        {% assign mapped_stack_item_image = mapped_stack_item_image | strip %}
         <img
           class="wf-stack-collage__img wf-stack-collage__img--{{ forloop.index }}"
-          src="{% if mapped_stack_item_image != blank %}{{ mapped_stack_item_image }}{% else %}{{ stack_item.featured_image | image_url: width: collage_width }}{% endif %}"
+          src="{{ stack_item.featured_image | image_url: width: collage_width }}"
           alt="{{ stack_item.title | escape }}"
-          data-wf-stack-image="1"
           loading="lazy">
       {% endif %}
     {% endfor %}
   {% endif %}
 
   {% if rendered_stack_items == 0 and product_object != blank and product_object.featured_image %}
-    {% capture mapped_product_image %}{% render 'wf-stack-image-url', item: product_object %}{% endcapture %}
-    {% assign mapped_product_image = mapped_product_image | strip %}
     <img
       class="wf-stack-collage__img wf-stack-collage__img--single"
-      src="{% if mapped_product_image != blank %}{{ mapped_product_image }}{% else %}{{ product_object.featured_image | image_url: width: collage_width }}{% endif %}"
+      src="{{ product_object.featured_image | image_url: width: collage_width }}"
       alt="{{ product_object.featured_image.alt | default: product_object.title | escape }}"
-      data-wf-stack-image="1"
       loading="lazy">
   {% endif %}
 
