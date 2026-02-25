@@ -1,5 +1,9 @@
-(function() {
-  function removeWhiteBackground(img) {
+(function () {
+  function isNearBlack(r, g, b) {
+    return r < 24 && g < 24 && b < 24;
+  }
+
+  function knockOutEdgeBlack(img) {
     if (!img || img.dataset.bgProcessed === "true") return;
     var src = img.getAttribute("src") || "";
     if (!src || src.indexOf("stack-collage-placeholder") !== -1) return;
@@ -8,7 +12,7 @@
     var height = img.naturalHeight || img.height;
     if (!width || !height) return;
 
-    var maxDim = 900;
+    var maxDim = 1200;
     var scale = Math.min(1, maxDim / Math.max(width, height));
     var cw = Math.max(1, Math.round(width * scale));
     var ch = Math.max(1, Math.round(height * scale));
@@ -23,28 +27,43 @@
       ctx.drawImage(img, 0, 0, cw, ch);
       var imageData = ctx.getImageData(0, 0, cw, ch);
       var data = imageData.data;
+      var visited = new Uint8Array(cw * ch);
+      var queue = [];
 
-      for (var i = 0; i < data.length; i += 4) {
-        var r = data[i];
-        var g = data[i + 1];
-        var b = data[i + 2];
-        var a = data[i + 3];
-        if (a === 0) continue;
+      function idx(x, y) {
+        return y * cw + x;
+      }
 
-        var max = Math.max(r, g, b);
-        var min = Math.min(r, g, b);
-        var sat = max === 0 ? 0 : (max - min) / max;
-        var light = (r + g + b) / 3;
+      function pushIfBlack(x, y) {
+        if (x < 0 || y < 0 || x >= cw || y >= ch) return;
+        var i = idx(x, y);
+        if (visited[i]) return;
+        var p = i * 4;
+        if (!isNearBlack(data[p], data[p + 1], data[p + 2])) return;
+        visited[i] = 1;
+        queue.push(i);
+      }
 
-        if (light > 246 && sat < 0.2) {
-          data[i + 3] = 0;
-          continue;
-        }
+      for (var x = 0; x < cw; x++) {
+        pushIfBlack(x, 0);
+        pushIfBlack(x, ch - 1);
+      }
+      for (var y = 0; y < ch; y++) {
+        pushIfBlack(0, y);
+        pushIfBlack(cw - 1, y);
+      }
 
-        if (light > 232 && sat < 0.23) {
-          var keep = Math.max(0, Math.min(1, (242 - light) / 14));
-          data[i + 3] = Math.round(a * keep);
-        }
+      while (queue.length) {
+        var current = queue.pop();
+        var px = current % cw;
+        var py = Math.floor(current / cw);
+        var p4 = current * 4;
+        data[p4 + 3] = 0;
+
+        pushIfBlack(px + 1, py);
+        pushIfBlack(px - 1, py);
+        pushIfBlack(px, py + 1);
+        pushIfBlack(px, py - 1);
       }
 
       ctx.putImageData(imageData, 0, 0);
@@ -57,19 +76,19 @@
   }
 
   function processAllCollageImages() {
-    var imgs = document.querySelectorAll(".wf-stack-collage__img");
-    imgs.forEach(function(img) {
+    var imgs = document.querySelectorAll(".wf-stack-collage__img[data-wf-stack-image='1']");
+    imgs.forEach(function (img) {
       if (img.complete) {
-        removeWhiteBackground(img);
+        knockOutEdgeBlack(img);
       } else {
-        img.addEventListener("load", function() { removeWhiteBackground(img); }, { once: true });
+        img.addEventListener("load", function () { knockOutEdgeBlack(img); }, { once: true });
       }
     });
   }
 
-  window.addEventListener("load", function() {
+  window.addEventListener("load", function () {
     processAllCollageImages();
-    setTimeout(processAllCollageImages, 300);
-    setTimeout(processAllCollageImages, 1000);
+    setTimeout(processAllCollageImages, 250);
+    setTimeout(processAllCollageImages, 900);
   });
 })();
