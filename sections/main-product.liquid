@@ -134,21 +134,7 @@
         }
       });
 
-      var candidates = target.querySelectorAll("li, article, td, [class*='product'], [class*='item'], [class*='bundle']");
-      candidates.forEach(function(node) {
-        var text = (node.textContent || "").toLowerCase();
-        var isAnchorTitleMatch = currentProductTitleLower && text.indexOf(currentProductTitleLower) !== -1;
-        var isZeroPrice = /\$0(?:\.00)?/.test(text);
-        if (!isAnchorTitleMatch || !isZeroPrice) return;
-
-        var hideNode =
-          node.closest("[class*='product']") ||
-          node.closest("[class*='item']") ||
-          node.closest("[class*='bundle']") ||
-          node;
-
-        hideNode.classList.add(hiddenClass);
-      });
+      // Keep Bundler output visible; previous broad selectors could hide the entire widget.
     }
 
     onJump();

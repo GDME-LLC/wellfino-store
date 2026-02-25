@@ -350,7 +350,20 @@ a:hover{text-decoration:underline}
   z-index:1;
   aspect-ratio:4/3;
   --wf-collage-pad:clamp(8px, 1.3vw, 14px);
-  --wf-collage-shadow:drop-shadow(0 14px 20px rgba(18,22,28,.18));
+  --wf-collage-shadow:drop-shadow(0 8px 10px rgba(18,22,28,.16));
+}
+.wf-stack-collage::after{
+  content:"";
+  position:absolute;
+  left:14%;
+  right:14%;
+  bottom:8%;
+  height:11%;
+  border-radius:999px;
+  background:radial-gradient(ellipse at center, rgba(20,22,28,.16) 0%, rgba(20,22,28,0) 74%);
+  filter:blur(5px);
+  z-index:0;
+  pointer-events:none;
 }
 .wf-stack-collage__img{
   position:absolute;
@@ -450,18 +463,6 @@ a:hover{text-decoration:underline}
 #stack-options .wf-stack-options__card [class*='bundler'] img{
   object-fit:contain;
   background:#fff;
-}
-#stack-options .wf-stack-options__card [class*='out-of-stock'],
-#stack-options .wf-stack-options__card [class*='sold-out']{
-  font-size:0;
-  line-height:0;
-}
-#stack-options .wf-stack-options__card [class*='out-of-stock']::before,
-#stack-options .wf-stack-options__card [class*='sold-out']::before{
-  content:"Stack availability depends on included items.";
-  font-size:12px;
-  line-height:1.4;
-  color:var(--wf-muted);
 }
 .wf-stack-hero{
   display:grid;
