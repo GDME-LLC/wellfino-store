@@ -90,11 +90,33 @@
 {% if product.featured_image %}
   {% assign stack_widget_fallback_image = product.featured_image | image_url: width: 800 %}
 {% endif %}
+{% assign stack_items_for_widget = product.metafields.custom.stack_items.value | default: product.metafields.custom.stack_items %}
+{% capture stack_widget_images_json -%}
+[
+{%- if stack_items_for_widget != blank -%}
+  {%- assign first_widget_item = true -%}
+  {%- for stack_item in stack_items_for_widget limit: 8 -%}
+    {%- if stack_item.featured_image -%}
+      {%- unless first_widget_item -%},{%- endunless -%}
+      {%- assign first_widget_item = false -%}
+      {%- capture mapped_stack_item_image -%}{% render 'wf-stack-image-url', item: stack_item %}{%- endcapture -%}
+      {%- assign mapped_stack_item_image = mapped_stack_item_image | strip -%}
+      {
+        "title": {{ stack_item.title | json }},
+        "title_down": {{ stack_item.title | downcase | json }},
+        "handle": {{ stack_item.handle | default: '' | downcase | json }},
+        "image": {% if mapped_stack_item_image != blank %}{{ mapped_stack_item_image | json }}{% else %}{{ stack_item.featured_image | image_url: width: 720 | json }}{% endif %}
+      }
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+]
+{%- endcapture %}
 <script>
   (function() {
-    var currentProductTitle = {{ product.title | json }};
-    var currentProductTitleLower = (currentProductTitle || "").toLowerCase();
     var hiddenClass = "wf-stack-options__hidden-item";
+    var stackItemImages = {{ stack_widget_images_json | strip_newlines }};
+    var stackImageCursor = 0;
 
     function onJump() {
       var jumpLink = document.querySelector("[data-stack-scroll]");
@@ -112,6 +134,33 @@
       return t === "get a discount!" || t === "get a discount" || t === "discount";
     }
 
+    function normalizeText(value) {
+      return (value || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    }
+
+    function findStackImageByContextText(text) {
+      if (!stackItemImages || !stackItemImages.length) return "";
+      var normalized = normalizeText(text);
+      if (!normalized) return "";
+
+      for (var i = 0; i < stackItemImages.length; i++) {
+        var item = stackItemImages[i] || {};
+        var byTitle = item.title_down && normalized.indexOf(normalizeText(item.title_down)) !== -1;
+        var byHandle = item.handle && normalized.indexOf(item.handle.replace(/-/g, " ")) !== -1;
+        if (byTitle || byHandle) {
+          return item.image || "";
+        }
+      }
+      return "";
+    }
+
+    function nextStackImage() {
+      if (!stackItemImages || !stackItemImages.length) return "";
+      var item = stackItemImages[stackImageCursor % stackItemImages.length] || {};
+      stackImageCursor += 1;
+      return item.image || "";
+    }
+
     function patchStackOptions() {
       var target = document.getElementById("stack-options");
       if (!target) return;
@@ -127,10 +176,15 @@
         var src = (img.getAttribute("src") || "").trim().toLowerCase();
         var brokenBySrc = !src || src.indexOf("placeholder") !== -1 || src.indexOf("no-image") !== -1 || src.indexOf("missing") !== -1;
         if (brokenBySrc || img.naturalWidth === 0) {
-          img.setAttribute("src", fallbackSrc);
+          var contextNode = img.closest("li, article, tr, td, [class*='product'], [class*='item'], [class*='bundle'], div");
+          var contextText = contextNode ? contextNode.textContent : "";
+          var mappedSrc = findStackImageByContextText(contextText) || nextStackImage() || fallbackSrc;
+          img.setAttribute("src", mappedSrc);
           img.removeAttribute("srcset");
           img.style.objectFit = "contain";
           img.style.background = "transparent";
+          img.style.display = "block";
+          img.style.visibility = "visible";
         }
       });
 
