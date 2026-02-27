@@ -44,6 +44,18 @@
   Optional override hook:
   if resolved_layout_key == 'womens-complete-system' etc, override layout_* vars here.
 {% endcomment %}
+{% if stack_handle == 'mens-complete-system' %}
+  {% comment %}
+    Mens Complete System target composition:
+    - two larger jars in back (left/right)
+    - two bottles in front (left/front-center)
+    - shared baseline, intentional overlap, Thorne-like depth
+  {% endcomment %}
+  {% assign layout_4_1 = '-24|1|42|0.92|5|-22|1|46|0.9' %}
+  {% assign layout_4_2 = '-2|1|44|0.98|4|-2|1|48|0.95' %}
+  {% assign layout_4_3 = '-6|0|56|1.18|2|-6|0|60|1.12' %}
+  {% assign layout_4_4 = '24|0|58|1.2|1|22|0|62|1.14' %}
+{% endif %}
 
 <div class="wf-stack-collage wf-stack-collage--count-{{ collage_count }}{% if class_name != blank %} {{ class_name }}{% endif %}" data-layout-key="{{ resolved_layout_key }}">
   {% if stack_items != blank %}
