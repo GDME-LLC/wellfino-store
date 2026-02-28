@@ -6,6 +6,10 @@
 {% assign rendered_stack_items = 0 %}
 {% assign collage_count = 0 %}
 {% assign stack_handle = product_object.handle | default: '' | downcase %}
+{% assign stack_forced_image = '' %}
+{% if stack_handle == 'mens-complete-system' %}
+  {% assign stack_forced_image = 'wf-mens-complete-system.png' | asset_url %}
+{% endif %}
 
 {% if stack_items != blank %}
   {% for stack_item in stack_items limit: 4 %}
@@ -20,10 +24,8 @@
 {% endif %}
 
 {% if stack_handle == 'mens-complete-system' %}
-  {% if product_object != blank and product_object.featured_image %}
-    {% assign stack_items = blank %}
-    {% assign collage_count = 1 %}
-  {% endif %}
+  {% assign stack_items = blank %}
+  {% assign collage_count = 1 %}
 {% endif %}
 
 {% assign resolved_layout_key = layout_key | default: '' %}
@@ -82,7 +84,15 @@
     {% endfor %}
   {% endif %}
 
-  {% if rendered_stack_items == 0 and product_object != blank and product_object.featured_image %}
+  {% if rendered_stack_items == 0 and stack_forced_image != blank %}
+    <img
+      class="wf-stack-collage__img wf-stack-collage__img--single"
+      src="{{ stack_forced_image }}"
+      alt="{{ product_object.title | default: 'Men&apos;s Complete System' | escape }}"
+      data-wf-stack-image="1"
+      style="--x-d:0;--y-d:0;--w-d:88%;--s-d:1;--z:3;--x-m:0;--y-m:0;--w-m:90%;--s-m:1;"
+      loading="lazy">
+  {% elsif rendered_stack_items == 0 and product_object != blank and product_object.featured_image %}
     {% capture mapped_product_image %}{% render 'wf-stack-image-url', item: product_object %}{% endcapture %}
     {% assign mapped_product_image = mapped_product_image | strip %}
     <img
@@ -95,12 +105,14 @@
   {% endif %}
 
   {% if rendered_stack_items == 0 %}
-    {% if product_object == blank or product_object.featured_image == blank %}
-      <img
-        class="wf-stack-collage__img wf-stack-collage__img--single"
-        src="{{ 'stack-collage-placeholder.svg' | asset_url }}"
-        alt="{{ product_object.title | default: 'Stack image placeholder' | escape }}"
-        loading="lazy">
+    {% if stack_forced_image == blank %}
+      {% if product_object == blank or product_object.featured_image == blank %}
+        <img
+          class="wf-stack-collage__img wf-stack-collage__img--single"
+          src="{{ 'stack-collage-placeholder.svg' | asset_url }}"
+          alt="{{ product_object.title | default: 'Stack image placeholder' | escape }}"
+          loading="lazy">
+      {% endif %}
     {% endif %}
   {% endif %}
 </div>
