@@ -9,7 +9,7 @@
 {% assign stack_title = product_object.title | default: '' | downcase %}
 {% assign stack_context_key = layout_key | default: '' | downcase %}
 {% assign stack_forced_image = '' %}
-{% if stack_handle == 'mens-complete-system' or stack_title contains 'mens complete system' or stack_title contains 'men''s complete system' or stack_context_key == 'mens-complete-system' %}
+{% if stack_handle == 'mens-complete-system' or stack_title contains 'mens complete system' or stack_title contains "men's complete system" or stack_context_key == 'mens-complete-system' %}
   {% assign stack_forced_image = 'wf-mens-complete-system.png' | asset_url %}
 {% endif %}
 
