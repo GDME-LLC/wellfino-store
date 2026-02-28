@@ -9,7 +9,7 @@
 {% assign stack_title = product_object.title | default: '' | downcase %}
 {% assign stack_context_key = layout_key | default: '' | downcase %}
 {% assign stack_forced_image = '' %}
-{% if stack_handle == 'mens-complete-system' or stack_title contains 'mens complete system' or stack_title contains "men's complete system" or stack_context_key == 'mens-complete-system' %}
+{% if stack_handle == 'mens-complete-system' or stack_handle == 'core-daily-complete-system' or stack_title contains 'mens complete system' or stack_title contains "men's complete system" or stack_title contains 'core daily complete system' or stack_context_key == 'mens-complete-system' or stack_context_key == 'core-daily-complete-system-mens' or stack_context_key == 'core-daily-complete-system-womens' %}
   {% assign stack_forced_image = 'wf-mens-complete-system.png' | asset_url %}
 {% endif %}
 
@@ -90,7 +90,7 @@
     <img
       class="wf-stack-collage__img wf-stack-collage__img--single"
       src="{{ stack_forced_image }}"
-      alt="{{ product_object.title | default: 'Men&apos;s Complete System' | escape }}"
+      alt="{{ product_object.title | default: 'Core Daily Complete System' | escape }}"
       data-wf-stack-image="1"
       style="--x-d:0;--y-d:0;--w-d:88%;--s-d:1;--z:3;--x-m:0;--y-m:0;--w-m:90%;--s-m:1;"
       loading="lazy">
