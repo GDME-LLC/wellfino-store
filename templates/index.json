@@ -12,16 +12,15 @@
     "hero": {
       "type": "wf-hero",
       "settings": {
-        "kicker": "",
+        "kicker": "HOLY SHIT REMOVE THIS",
         "heading": "Shop Wellfino",
         "subheading": "Curated supplements and stacks built for everyday performance.",
         "primary_label": "Browse Stacks",
         "primary_url": "/pages/stacks",
         "secondary_label": "Browse All",
         "secondary_url": "/collections/all",
-        "background_image": "",
         "back_link_label": "Back to Wellfino.com",
-        "back_link_url": "https:\/\/wellfino.com"
+        "back_link_url": "https://wellfino.com"
       }
     }
   },
@@ -29,4 +28,3 @@
     "hero"
   ]
 }
-
