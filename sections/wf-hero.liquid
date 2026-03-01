@@ -1,10 +1,11 @@
 {% assign hero_background_url = 'wellness-refined.png' | asset_url %}
 {% assign hero_cache_bust = 'now' | date: '%s' %}
+{% assign hero_background_src = hero_background_url | append: '&cb=' | append: hero_cache_bust %}
 
 <section class="wf-hero">
   <div class="wf-wrap">
     <div class="wf-hero__card wf-hero__card--has-bg">
-      <img class="wf-hero__bg-photo" src="{{ hero_background_url }}?v={{ hero_cache_bust }}" alt="" loading="eager" fetchpriority="high" aria-hidden="true">
+      <img class="wf-hero__bg-photo" src="{{ hero_background_src }}" alt="" loading="eager" fetchpriority="high" aria-hidden="true">
       <div class="wf-hero__bg-overlay" aria-hidden="true"></div>
       {% if section.settings.kicker != blank %}
         <div class="wf-hero__kicker">{{ section.settings.kicker }}</div>

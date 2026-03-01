@@ -74,7 +74,7 @@ a:hover{text-decoration:underline}
   background-size:26px 26px;
   opacity:.26;
 }
-.wf-hero__card > *{
+.wf-hero__card > *:not(.wf-hero__bg-photo):not(.wf-hero__bg-overlay){
   position:relative;
   z-index:1;
 }
