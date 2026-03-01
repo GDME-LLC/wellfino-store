@@ -14,11 +14,11 @@
     <div class="wf-hero__card wf-hero__card--has-bg">
       <img class="wf-hero__bg-photo" src="{{ hero_background_src }}" alt="" loading="eager" fetchpriority="high" aria-hidden="true">
       <div class="wf-hero__bg-overlay" aria-hidden="true"></div>
+      <h1>{{ section.settings.heading }}</h1>
+      <p>{{ section.settings.subheading }}</p>
       {% if section.settings.kicker != blank %}
         <div class="wf-hero__kicker">{{ section.settings.kicker }}</div>
       {% endif %}
-      <h1>{{ section.settings.heading }}</h1>
-      <p>{{ section.settings.subheading }}</p>
 
       <div class="wf-hero__cta">
         <a class="wf-btn wf-btn--primary" href="{{ section.settings.primary_url }}">{{ section.settings.primary_label }} &rarr;</a>
