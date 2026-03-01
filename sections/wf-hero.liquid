@@ -24,42 +24,65 @@
     .wf-hero .wf-hero__card > *:not(.wf-hero__bg-photo):not(.wf-hero__bg-overlay):not(h1):not(p):not(.wf-hero__cta):not(.wf-hero__backlink){
       display:none !important;
     }
+    .wf-hero .wf-hero__content{
+      position:relative;
+      z-index:1;
+    }
+    .wf-hero .wf-hero__card > :not(.wf-hero__bg-photo):not(.wf-hero__bg-overlay):not(.wf-hero__content){
+      display:none !important;
+    }
+    .wf-hero .wf-hero__content > :empty{display:none !important;}
   </style>
   <div class="wf-wrap">
     <div class="wf-hero__card wf-hero__card--has-bg">
       <img class="wf-hero__bg-photo" src="{{ hero_background_src }}" alt="" loading="eager" fetchpriority="high" aria-hidden="true">
       <div class="wf-hero__bg-overlay" aria-hidden="true"></div>
-      <h1>{{ section.settings.heading }}</h1>
-      <p>{{ section.settings.subheading }}</p>
+      <div class="wf-hero__content">
+        <h1>{{ section.settings.heading }}</h1>
+        <p>{{ section.settings.subheading }}</p>
 
-      <div class="wf-hero__cta">
-        <a class="wf-btn wf-btn--primary" href="{{ section.settings.primary_url }}">{{ section.settings.primary_label }} &rarr;</a>
-        <a class="wf-btn" href="{{ section.settings.secondary_url }}">{{ section.settings.secondary_label }}</a>
+        <div class="wf-hero__cta">
+          <a class="wf-btn wf-btn--primary" href="{{ section.settings.primary_url }}">{{ section.settings.primary_label }} &rarr;</a>
+          <a class="wf-btn" href="{{ section.settings.secondary_url }}">{{ section.settings.secondary_label }}</a>
+        </div>
+
+        <a class="wf-hero__backlink" href="{{ section.settings.back_link_url }}">{{ section.settings.back_link_label }}</a>
       </div>
-
-      <a class="wf-hero__backlink" href="{{ section.settings.back_link_url }}">{{ section.settings.back_link_label }}</a>
     </div>
   </div>
 </section>
 <script>
   (function() {
-    function keepDirectChild(el) {
+    function isAllowed(el) {
       if (el.classList.contains('wf-hero__bg-photo')) return true;
       if (el.classList.contains('wf-hero__bg-overlay')) return true;
-      if (el.tagName === 'H1' || el.tagName === 'P') return true;
-      if (el.classList.contains('wf-hero__cta')) return true;
-      if (el.classList.contains('wf-hero__backlink')) return true;
+      if (el.classList.contains('wf-hero__content')) return true;
+      if (el.closest('.wf-hero__content')) return true;
       return false;
+    }
+
+    function looksLikeInjectedBar(el) {
+      if (!(el instanceof HTMLElement)) return false;
+      if (isAllowed(el)) return false;
+      var cs = window.getComputedStyle(el);
+      var bg = cs.backgroundColor || '';
+      var round = parseFloat(cs.borderRadius || '0') || 0;
+      var w = el.offsetWidth || 0;
+      var h = el.offsetHeight || 0;
+      var text = (el.textContent || '').replace(/[\s\u00A0]+/g, '');
+      var lightBg = bg.indexOf('rgb(255, 255, 255)') !== -1 || bg.indexOf('rgba(255, 255, 255') !== -1;
+      return !text && w >= 220 && h >= 8 && h <= 80 && round >= 8 && lightBg;
     }
 
     function prune(card) {
       Array.prototype.slice.call(card.children).forEach(function(el) {
-        if (!keepDirectChild(el)) {
-          el.remove();
-        }
+        if (!isAllowed(el)) el.remove();
       });
       card.querySelectorAll('hr, [role=\"separator\"], [class*=\"kicker\"], [id*=\"kicker\"]').forEach(function(el) {
         el.remove();
+      });
+      card.querySelectorAll('*').forEach(function(el) {
+        if (looksLikeInjectedBar(el)) el.remove();
       });
     }
 
