@@ -1,9 +1,6 @@
 {% assign hero_background_url = 'wellness-refined.png' | asset_url %}
 {% assign hero_cache_bust = 'now' | date: '%s' %}
 {% assign hero_background_src = hero_background_url | append: '&cb=' | append: hero_cache_bust %}
-{% assign hero_kicker_text = section.settings.kicker | strip %}
-{% assign hero_kicker_normalized = hero_kicker_text | replace: ' ', '' | replace: '	', '' | replace: '
-', '' | replace: ' ', '' %}
 
 <section class="wf-hero">
   <style>
@@ -13,6 +10,7 @@
       background-image: none !important;
     }
     .wf-hero .wf-hero__kicker{display:none !important;}
+    .wf-hero hr{display:none !important;}
   </style>
   <div class="wf-wrap">
     <div class="wf-hero__card wf-hero__card--has-bg">
@@ -20,9 +18,6 @@
       <div class="wf-hero__bg-overlay" aria-hidden="true"></div>
       <h1>{{ section.settings.heading }}</h1>
       <p>{{ section.settings.subheading }}</p>
-      {% if hero_kicker_normalized != blank %}
-        <div class="wf-hero__kicker">{{ hero_kicker_text }}</div>
-      {% endif %}
 
       <div class="wf-hero__cta">
         <a class="wf-btn wf-btn--primary" href="{{ section.settings.primary_url }}">{{ section.settings.primary_label }} &rarr;</a>
