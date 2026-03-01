@@ -2,7 +2,7 @@
 
 <section class="wf-hero">
   <div class="wf-wrap">
-    <div class="wf-hero__card wf-hero__card--has-bg" style="--wf-hero-bg:url('{{ hero_background_url }}')">
+    <div class="wf-hero__card wf-hero__card--has-bg" style="background-image:linear-gradient(105deg, rgba(16,12,9,.56) 0%, rgba(28,20,14,.42) 45%, rgba(38,28,20,.28) 100%), url('{{ hero_background_url }}'); background-size:cover; background-position:center center;">
       {% if section.settings.kicker != blank %}
         <div class="wf-hero__kicker">{{ section.settings.kicker }}</div>
       {% endif %}
