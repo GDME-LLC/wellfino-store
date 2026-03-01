@@ -43,23 +43,40 @@
 </section>
 <script>
   (function() {
-    var card = document.querySelector('.wf-hero .wf-hero__card');
-    if (!card) return;
-    var keep = '.wf-hero__bg-photo, .wf-hero__bg-overlay, h1, p, .wf-hero__cta, .wf-hero__backlink, .wf-btn';
-    card.querySelectorAll('*').forEach(function(el) {
-      if (el.matches(keep) || el.closest('.wf-hero__cta')) return;
-      var text = (el.textContent || '').replace(/[\s\u00A0]+/g, '');
-      var cs = window.getComputedStyle(el);
-      var w = el.offsetWidth || 0;
-      var h = el.offsetHeight || 0;
-      var round = parseFloat(cs.borderRadius || '0') || 0;
-      var bg = cs.backgroundColor || '';
-      var hasVisibleBg = bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent';
-      var looksLikeBar = w > 220 && h >= 8 && h <= 90 && round >= 8;
-      if (!text && (looksLikeBar || hasVisibleBg)) {
-        el.style.display = 'none';
-      }
-    });
+    function keepDirectChild(el) {
+      if (el.classList.contains('wf-hero__bg-photo')) return true;
+      if (el.classList.contains('wf-hero__bg-overlay')) return true;
+      if (el.tagName === 'H1' || el.tagName === 'P') return true;
+      if (el.classList.contains('wf-hero__cta')) return true;
+      if (el.classList.contains('wf-hero__backlink')) return true;
+      return false;
+    }
+
+    function prune(card) {
+      Array.prototype.slice.call(card.children).forEach(function(el) {
+        if (!keepDirectChild(el)) {
+          el.remove();
+        }
+      });
+      card.querySelectorAll('hr, [role=\"separator\"], [class*=\"kicker\"], [id*=\"kicker\"]').forEach(function(el) {
+        el.remove();
+      });
+    }
+
+    function start() {
+      var card = document.querySelector('.wf-hero .wf-hero__card');
+      if (!card) return;
+      prune(card);
+      var observer = new MutationObserver(function() { prune(card); });
+      observer.observe(card, { childList: true, subtree: true });
+      setTimeout(function() { observer.disconnect(); }, 30000);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start);
+    } else {
+      start();
+    }
   })();
 </script>
 
