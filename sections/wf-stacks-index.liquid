@@ -14,11 +14,11 @@
       {% endif %}
       <a class="wf-tile wf-stack-card" href="/products/{{ stack_1_handle }}">
         <div class="wf-stack-card__media">
-          {% render 'wf-stack-collage', product_object: stack_1_product, class_name: 'wf-stack-collage--card', image_width: 900, layout_key: 'core-daily-complete-system-mens' %}
+          {% render 'wf-stack-collage', product_object: stack_1_product, class_name: 'wf-stack-collage--card', image_width: 900, layout_key: 'core-daily-complete-system' %}
         </div>
         <div class="wf-stack-card__pill">10% savings</div>
-        <h3>Core Daily Complete System + Men&apos;s Multivitamin</h3>
-        <p>Core Daily Complete System paired with the Men&apos;s multivitamin for full daily support.</p>
+        <h3>Core Daily Complete System Stack</h3>
+        <p>Comprehensive daily foundation with your selected multivitamin option.</p>
         <div class="wf-stack-card__price-row">
           {% if stack_1_product != blank and stack_1_product.price > 0 %}
             <span class="wf-stack-card__price">From {{ stack_1_product.price | money }}</span>
@@ -29,19 +29,19 @@
         <span class="wf-btn wf-btn--primary wf-stack-card__cta">Shop Stack</span>
       </a>
 
-      {% assign stack_2_handle = 'core-daily-complete-system-stack' %}
+      {% assign stack_2_handle = 'core-essentials-stack' %}
       {% assign stack_2_product = all_products[stack_2_handle] %}
       {% if stack_2_product == blank %}
-        {% assign stack_2_handle = 'core-daily-complete-system' %}
+        {% assign stack_2_handle = 'core-essentials' %}
         {% assign stack_2_product = all_products[stack_2_handle] %}
       {% endif %}
       <a class="wf-tile wf-stack-card" href="/products/{{ stack_2_handle }}">
         <div class="wf-stack-card__media">
-          {% render 'wf-stack-collage', product_object: stack_2_product, class_name: 'wf-stack-collage--card', image_width: 900, layout_key: 'core-daily-complete-system-womens' %}
+          {% render 'wf-stack-collage', product_object: stack_2_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
         </div>
         <div class="wf-stack-card__pill">10% savings</div>
-        <h3>Core Daily Complete System + Women&apos;s Multivitamin</h3>
-        <p>Core Daily Complete System paired with the Women&apos;s multivitamin for complete daily nutrition.</p>
+        <h3>Core Essentials Stack</h3>
+        <p>Straightforward essentials designed to keep everyday nutrition consistent.</p>
         <div class="wf-stack-card__price-row">
           {% if stack_2_product != blank and stack_2_product.price > 0 %}
             <span class="wf-stack-card__price">From {{ stack_2_product.price | money }}</span>
