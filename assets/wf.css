@@ -87,8 +87,9 @@ a:hover{text-decoration:underline}
 .wf-hero__card--has-bg h1,
 .wf-hero__card--has-bg p,
 .wf-hero__card--has-bg .wf-hero__backlink{
-  color:#ffffff;
+  color:#ffffff !important;
 }
+.wf-hero__card--has-bg .wf-hero__kicker{color:#ffffff !important;border-color:rgba(255,255,255,.38);}
 .wf-hero__card--has-bg .wf-btn{
   border-color:rgba(245,241,234,.48);
   color:#f5f1ea;
