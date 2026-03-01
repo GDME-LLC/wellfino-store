@@ -1,8 +1,11 @@
 {% assign hero_background_url = 'wellness-refined.png' | asset_url %}
+{% assign hero_cache_bust = 'now' | date: '%s' %}
 
 <section class="wf-hero">
   <div class="wf-wrap">
-    <div class="wf-hero__card wf-hero__card--has-bg" style="background-image:linear-gradient(105deg, rgba(16,12,9,.56) 0%, rgba(28,20,14,.42) 45%, rgba(38,28,20,.28) 100%), url('{{ hero_background_url }}'); background-size:cover; background-position:center center;">
+    <div class="wf-hero__card wf-hero__card--has-bg">
+      <img class="wf-hero__bg-photo" src="{{ hero_background_url }}?v={{ hero_cache_bust }}" alt="" loading="eager" fetchpriority="high" aria-hidden="true">
+      <div class="wf-hero__bg-overlay" aria-hidden="true"></div>
       {% if section.settings.kicker != blank %}
         <div class="wf-hero__kicker">{{ section.settings.kicker }}</div>
       {% endif %}
