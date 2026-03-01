@@ -9,8 +9,18 @@
       background: none !important;
       background-image: none !important;
     }
+    .wf-hero .wf-hero__card::before,
+    .wf-hero .wf-hero__card::after,
+    .wf-hero *::before,
+    .wf-hero *::after{
+      content:none !important;
+      display:none !important;
+    }
     .wf-hero .wf-hero__kicker{display:none !important;}
     .wf-hero hr{display:none !important;}
+    .wf-hero [role='separator']{display:none !important;}
+    .wf-hero [class*='kicker'],
+    .wf-hero [id*='kicker']{display:none !important;}
     .wf-hero .wf-hero__card > *:not(.wf-hero__bg-photo):not(.wf-hero__bg-overlay):not(h1):not(p):not(.wf-hero__cta):not(.wf-hero__backlink){
       display:none !important;
     }
@@ -31,6 +41,27 @@
     </div>
   </div>
 </section>
+<script>
+  (function() {
+    var card = document.querySelector('.wf-hero .wf-hero__card');
+    if (!card) return;
+    var keep = '.wf-hero__bg-photo, .wf-hero__bg-overlay, h1, p, .wf-hero__cta, .wf-hero__backlink, .wf-btn';
+    card.querySelectorAll('*').forEach(function(el) {
+      if (el.matches(keep) || el.closest('.wf-hero__cta')) return;
+      var text = (el.textContent || '').replace(/[\s\u00A0]+/g, '');
+      var cs = window.getComputedStyle(el);
+      var w = el.offsetWidth || 0;
+      var h = el.offsetHeight || 0;
+      var round = parseFloat(cs.borderRadius || '0') || 0;
+      var bg = cs.backgroundColor || '';
+      var hasVisibleBg = bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent';
+      var looksLikeBar = w > 220 && h >= 8 && h <= 90 && round >= 8;
+      if (!text && (looksLikeBar || hasVisibleBg)) {
+        el.style.display = 'none';
+      }
+    });
+  })();
+</script>
 
 {% schema %}
 {
