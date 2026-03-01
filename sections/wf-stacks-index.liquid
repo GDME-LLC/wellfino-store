@@ -32,12 +32,11 @@
       {% assign stack_2_handle = 'core-essentials-stack' %}
       {% assign stack_2_product = all_products[stack_2_handle] %}
       {% if stack_2_product == blank %}
-        {% assign stack_2_handle = 'core-essentials' %}
-        {% assign stack_2_product = all_products[stack_2_handle] %}
+        {% assign stack_2_product = all_products['core-essentials'] %}
       {% endif %}
-      <a class="wf-tile wf-stack-card" href="/products/{{ stack_2_handle }}">
+      <a class="wf-tile wf-stack-card" href="/products/core-essentials-stack">
         <div class="wf-stack-card__media">
-          {% render 'wf-stack-collage', product_object: stack_2_product, class_name: 'wf-stack-collage--card', image_width: 900 %}
+          {% render 'wf-stack-collage', product_object: stack_2_product, class_name: 'wf-stack-collage--card', image_width: 900, layout_key: 'core-essentials-stack' %}
         </div>
         <div class="wf-stack-card__pill">10% savings</div>
         <h3>Core Essentials Stack</h3>
