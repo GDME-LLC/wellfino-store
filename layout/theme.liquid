@@ -25,12 +25,39 @@
       background-repeat: no-repeat !important;
     }
     .wf-hero .wf-hero__card::after{display:none !important;}
+    .wf-hero .wf-hero__kicker,
+    .wf-hero [class*="kicker"],
+    .wf-hero [id*="kicker"],
+    .wf-hero hr,
+    .wf-hero [role="separator"]{
+      display:none !important;
+      content:none !important;
+    }
   </style>
   {{ 'wf.css' | asset_url | stylesheet_tag }}
 </head>
 <body>
   {% section 'header' %}
   <main id="MainContent">{{ content_for_layout }}</main>
+  <script>
+    (function() {
+      function removeHeroBars() {
+        var hero = document.querySelector('.wf-hero');
+        if (!hero) return;
+        hero.querySelectorAll('.wf-hero__kicker, [class*=\"kicker\"], [id*=\"kicker\"], hr, [role=\"separator\"]').forEach(function(el) {
+          el.remove();
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', removeHeroBars);
+      } else {
+        removeHeroBars();
+      }
+      var observer = new MutationObserver(removeHeroBars);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+      setTimeout(function() { observer.disconnect(); }, 30000);
+    })();
+  </script>
   {% section 'footer' %}
 </body>
 </html>
