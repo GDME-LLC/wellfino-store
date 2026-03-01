@@ -9,8 +9,14 @@
 {% assign stack_title = product_object.title | default: '' | downcase %}
 {% assign stack_context_key = layout_key | default: '' | downcase %}
 {% assign stack_forced_image = '' %}
+{% assign forced_single_wd = '88' %}
+{% assign forced_single_wm = '90' %}
 {% if stack_handle == 'mens-complete-system' or stack_handle == 'core-daily-complete-system' or stack_handle == 'core-daily-complete-system-stack' or stack_title contains 'mens complete system' or stack_title contains "men's complete system" or stack_title contains 'core daily complete system' or stack_context_key == 'mens-complete-system' or stack_context_key == 'core-daily-complete-system-mens' or stack_context_key == 'core-daily-complete-system-womens' %}
   {% assign stack_forced_image = 'coredailycompletesystem.png' | asset_url %}
+  {% if class_name contains 'wf-stack-collage--card' and stack_context_key == 'core-daily-complete-system' %}
+    {% assign forced_single_wd = '92' %}
+    {% assign forced_single_wm = '94' %}
+  {% endif %}
 {% elsif stack_handle == 'core-essentials-stack' or stack_handle == 'core-essentials' or stack_title contains 'core essentials' or stack_context_key == 'core-essentials-stack' %}
   {% assign stack_forced_image = 'coredailyessentials.png' | asset_url %}
 {% endif %}
@@ -94,7 +100,7 @@
       src="{{ stack_forced_image }}"
       alt="{{ product_object.title | default: 'Stack image' | escape }}"
       data-wf-stack-image="1"
-      style="--x-d:0;--y-d:0;--w-d:88%;--s-d:1;--z:3;--x-m:0;--y-m:0;--w-m:90%;--s-m:1;"
+      style="--x-d:0;--y-d:0;--w-d:{{ forced_single_wd }}%;--s-d:1;--z:3;--x-m:0;--y-m:0;--w-m:{{ forced_single_wm }}%;--s-m:1;"
       loading="lazy">
   {% elsif rendered_stack_items == 0 and product_object != blank and product_object.featured_image %}
     {% capture mapped_product_image %}{% render 'wf-stack-image-url', item: product_object %}{% endcapture %}
