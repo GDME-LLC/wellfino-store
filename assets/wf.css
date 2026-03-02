@@ -436,6 +436,10 @@ a:hover{text-decoration:underline}
   filter:var(--wf-collage-shadow) contrast(1.03) saturate(1.04);
 }
 @media (max-width: 749px){
+  .wf-product-card__media .wf-stack-collage{
+    --ground:62%;
+    --y-lift-m:-36;
+  }
   .wf-stack-collage__img{
     top:var(--ground);
     width:var(--w-m, var(--w-d, 44%));
@@ -445,7 +449,7 @@ a:hover{text-decoration:underline}
     transform:translate(-50%, var(--single-shift-m, var(--single-shift-d, 0%))) scale(1);
   }
   .wf-product-card__media .wf-stack-collage__img--single{
-    transform:translate(-50%, -26%) scale(1.14) !important;
+    transform:translate(-50%, -34%) scale(1.14) !important;
   }
 }
 .wf-stack-collage--pdp{
