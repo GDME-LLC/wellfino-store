@@ -12,7 +12,15 @@
         {% assign stack_1_handle = 'core-daily-complete-system' %}
         {% assign stack_1_product = all_products[stack_1_handle] %}
       {% endif %}
-      <a class="wf-tile wf-stack-card" href="/products/{{ stack_1_handle }}">
+      {% if stack_1_product == blank %}
+        {% assign stack_1_handle = 'core-daily-complete-stack' %}
+        {% assign stack_1_product = all_products[stack_1_handle] %}
+      {% endif %}
+      {% assign stack_1_url = '/products/core-daily-complete-system-stack' %}
+      {% if stack_1_product != blank %}
+        {% assign stack_1_url = stack_1_product.url %}
+      {% endif %}
+      <a class="wf-tile wf-stack-card" href="{{ stack_1_url }}">
         <div class="wf-stack-card__media">
           {% render 'wf-stack-collage', product_object: stack_1_product, class_name: 'wf-stack-collage--card', image_width: 900, layout_key: 'core-daily-complete-system' %}
         </div>
@@ -32,9 +40,22 @@
       {% assign stack_2_handle = 'core-essentials-stack' %}
       {% assign stack_2_product = all_products[stack_2_handle] %}
       {% if stack_2_product == blank %}
-        {% assign stack_2_product = all_products['core-essentials'] %}
+        {% assign stack_2_handle = 'core-essentials' %}
+        {% assign stack_2_product = all_products[stack_2_handle] %}
       {% endif %}
-      <a class="wf-tile wf-stack-card" href="/products/core-essentials-stack">
+      {% if stack_2_product == blank %}
+        {% assign stack_2_handle = 'core-daily-essentials-stack' %}
+        {% assign stack_2_product = all_products[stack_2_handle] %}
+      {% endif %}
+      {% if stack_2_product == blank %}
+        {% assign stack_2_handle = 'core-daily-essentials' %}
+        {% assign stack_2_product = all_products[stack_2_handle] %}
+      {% endif %}
+      {% assign stack_2_url = '/products/core-essentials-stack' %}
+      {% if stack_2_product != blank %}
+        {% assign stack_2_url = stack_2_product.url %}
+      {% endif %}
+      <a class="wf-tile wf-stack-card" href="{{ stack_2_url }}">
         <div class="wf-stack-card__media">
           {% render 'wf-stack-collage', product_object: stack_2_product, class_name: 'wf-stack-collage--card', image_width: 900, layout_key: 'core-essentials-stack' %}
         </div>

@@ -113,7 +113,6 @@
 {%- endcapture %}
 <script>
   (function() {
-    var isStackProduct = {{ is_stack_anchor | json }};
     var hiddenClass = "wf-stack-options__hidden-item";
     var stackItemImages = {{ stack_widget_images_json | strip_newlines }};
 
@@ -203,16 +202,6 @@
       });
     }
 
-    function moveStackOptionsToBottom() {
-      if (!isStackProduct) return;
-      var target = document.getElementById("stack-options");
-      var mainContent = document.getElementById("MainContent");
-      if (!target || !mainContent) return;
-      if (mainContent.lastElementChild !== target) {
-        mainContent.appendChild(target);
-      }
-    }
-
     function patchStackOptions() {
       var target = document.getElementById("stack-options");
       if (!target) return;
@@ -259,20 +248,13 @@
     onJump();
 
     window.addEventListener("load", function() {
-      moveStackOptionsToBottom();
       patchStackOptions();
-      setTimeout(moveStackOptionsToBottom, 120);
       setTimeout(patchStackOptions, 350);
-      setTimeout(moveStackOptionsToBottom, 450);
       setTimeout(patchStackOptions, 1200);
-      setTimeout(moveStackOptionsToBottom, 1300);
       var target = document.getElementById("stack-options");
       if (!target) return;
-      var observer = new MutationObserver(function() {
-        moveStackOptionsToBottom();
-        patchStackOptions();
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
+      var observer = new MutationObserver(function() { patchStackOptions(); });
+      observer.observe(target, { childList: true, subtree: true });
       setTimeout(function() { observer.disconnect(); }, 15000);
     });
   })();

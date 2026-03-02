@@ -9,10 +9,21 @@
         <li>&#10003; GMP-Certified Production</li>
         <li>&#10003; Third-Party Tested for Quality</li>
       </ul>
+      {% assign quality_stack_1 = all_products['core-daily-complete-system-stack'] %}
+      {% if quality_stack_1 == blank %}{% assign quality_stack_1 = all_products['core-daily-complete-system'] %}{% endif %}
+      {% if quality_stack_1 == blank %}{% assign quality_stack_1 = all_products['core-daily-complete-stack'] %}{% endif %}
+      {% assign quality_stack_1_url = '/products/core-daily-complete-system-stack' %}
+      {% if quality_stack_1 != blank %}{% assign quality_stack_1_url = quality_stack_1.url %}{% endif %}
+      {% assign quality_stack_2 = all_products['core-essentials-stack'] %}
+      {% if quality_stack_2 == blank %}{% assign quality_stack_2 = all_products['core-essentials'] %}{% endif %}
+      {% if quality_stack_2 == blank %}{% assign quality_stack_2 = all_products['core-daily-essentials-stack'] %}{% endif %}
+      {% if quality_stack_2 == blank %}{% assign quality_stack_2 = all_products['core-daily-essentials'] %}{% endif %}
+      {% assign quality_stack_2_url = '/products/core-essentials-stack' %}
+      {% if quality_stack_2 != blank %}{% assign quality_stack_2_url = quality_stack_2.url %}{% endif %}
       <div class="wf-stack-cta">
         <a class="wf-btn wf-btn--primary" href="/pages/stacks">View Stacks</a>
-        <a class="wf-btn" href="/products/core-daily-complete-system-stack">Core Daily Complete Stack</a>
-        <a class="wf-btn" href="/products/core-essentials-stack">Core Essentials Stack</a>
+        <a class="wf-btn" href="{{ quality_stack_1_url }}">Core Daily Complete Stack</a>
+        <a class="wf-btn" href="{{ quality_stack_2_url }}">Core Essentials Stack</a>
       </div>
     </div>
   </div>
