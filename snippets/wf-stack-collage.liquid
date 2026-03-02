@@ -21,7 +21,7 @@
     {% assign forced_single_shift_d = '-4%' %}
     {% assign forced_single_shift_m = '-3%' %}
   {% endif %}
-{% elsif stack_handle == 'core-essentials-stack' or stack_handle == 'core-essentials' or stack_title contains 'core essentials' or stack_context_key == 'core-essentials-stack' %}
+{% elsif stack_handle == 'core-essentials-stack' or stack_handle == 'core-essentials' or stack_handle == 'core-daily-essentials-stack' or stack_handle == 'core-daily-essentials' or stack_title contains 'core essentials' or stack_title contains 'core daily essentials' or stack_context_key == 'core-essentials-stack' or stack_context_key == 'core-daily-essentials-stack' %}
   {% assign stack_forced_image = 'coredailyessentials.png' | asset_url %}
 {% elsif stack_handle == 'focus-cognition-stack' or stack_handle == 'focus-cognition' or stack_title contains 'focus & cognition' or stack_title contains 'focus and cognition' or stack_context_key == 'focus-cognition-stack' %}
   {% assign stack_forced_image = 'focuscognitionstack.png' | asset_url %}
