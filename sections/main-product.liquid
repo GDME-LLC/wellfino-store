@@ -22,12 +22,47 @@
           <div class="wf-product-hero__media">
             {% render 'wf-stack-collage', product_object: product, class_name: 'wf-stack-collage--pdp', image_width: 1400 %}
           </div>
-        {% elsif product.featured_image %}
-          <img
-            src="{{ product.featured_image | image_url: width: 1400 }}"
-            alt="{{ product.featured_image.alt | escape }}"
-            class="wf-product-hero__image"
-            loading="lazy">
+        {% elsif product.images.size > 0 %}
+          <div class="wf-product-gallery" data-wf-product-gallery>
+            {%- assign stage_image = product.images.first -%}
+            <button type="button" class="wf-product-gallery__stage-btn" data-gallery-open aria-label="Open product image zoom view">
+              <img
+                src="{{ stage_image | image_url: width: 1800 }}"
+                alt="{{ stage_image.alt | default: product.title | escape }}"
+                class="wf-product-gallery__stage-image"
+                data-gallery-stage
+                data-gallery-index="0"
+                loading="lazy">
+            </button>
+
+            {% if product.images.size > 1 %}
+              <div class="wf-product-gallery__thumbs" role="list" aria-label="Product image thumbnails">
+                {% for image in product.images %}
+                  <button
+                    type="button"
+                    class="wf-product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                    data-gallery-thumb
+                    data-gallery-index="{{ forloop.index0 }}"
+                    data-gallery-src="{{ image | image_url: width: 1800 }}"
+                    data-gallery-alt="{{ image.alt | default: product.title | escape }}"
+                    aria-label="Show image {{ forloop.index }} of {{ product.images.size }}">
+                    <img
+                      src="{{ image | image_url: width: 240 }}"
+                      alt="{{ image.alt | default: product.title | escape }}"
+                      class="wf-product-gallery__thumb-image"
+                      loading="lazy">
+                  </button>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="wf-product-gallery__modal" data-gallery-modal hidden>
+              <button type="button" class="wf-product-gallery__close" data-gallery-close aria-label="Close image zoom">Close</button>
+              <div class="wf-product-gallery__modal-frame">
+                <img src="{{ stage_image | image_url: width: 2400 }}" alt="{{ stage_image.alt | default: product.title | escape }}" class="wf-product-gallery__modal-image" data-gallery-modal-image>
+              </div>
+            </div>
+          </div>
         {% endif %}
 
         {% if product.description != blank %}
@@ -258,9 +293,86 @@
       // Keep Bundler output visible; previous broad selectors could hide the entire widget.
     }
 
+    function initProductGallery() {
+      var galleries = document.querySelectorAll("[data-wf-product-gallery]");
+      galleries.forEach(function(gallery) {
+        if (gallery.dataset.enhanced === "true") return;
+        gallery.dataset.enhanced = "true";
+
+        var stageImage = gallery.querySelector("[data-gallery-stage]");
+        var thumbs = gallery.querySelectorAll("[data-gallery-thumb]");
+        var openButton = gallery.querySelector("[data-gallery-open]");
+        var modal = gallery.querySelector("[data-gallery-modal]");
+        var modalImage = gallery.querySelector("[data-gallery-modal-image]");
+        var closeButtons = gallery.querySelectorAll("[data-gallery-close]");
+
+        function setActiveImage(src, alt, index) {
+          if (!stageImage || !src) return;
+          stageImage.setAttribute("src", src);
+          stageImage.setAttribute("alt", alt || "");
+          stageImage.setAttribute("data-gallery-index", String(index || 0));
+          if (modalImage) {
+            modalImage.setAttribute("src", src);
+            modalImage.setAttribute("alt", alt || "");
+          }
+          thumbs.forEach(function(thumb) {
+            thumb.classList.toggle("is-active", thumb.getAttribute("data-gallery-index") === String(index || 0));
+          });
+        }
+
+        thumbs.forEach(function(thumb) {
+          thumb.addEventListener("click", function() {
+            setActiveImage(
+              thumb.getAttribute("data-gallery-src"),
+              thumb.getAttribute("data-gallery-alt"),
+              thumb.getAttribute("data-gallery-index")
+            );
+          });
+        });
+
+        function closeModal() {
+          if (!modal) return;
+          modal.setAttribute("hidden", "");
+          document.body.classList.remove("wf-modal-open");
+        }
+
+        function openModal() {
+          if (!modal || !stageImage) return;
+          if (modalImage) {
+            modalImage.setAttribute("src", stageImage.getAttribute("src") || "");
+            modalImage.setAttribute("alt", stageImage.getAttribute("alt") || "");
+          }
+          modal.removeAttribute("hidden");
+          document.body.classList.add("wf-modal-open");
+        }
+
+        if (openButton) {
+          openButton.addEventListener("click", openModal);
+        }
+
+        closeButtons.forEach(function(button) {
+          button.addEventListener("click", closeModal);
+        });
+
+        if (modal) {
+          modal.addEventListener("click", function(event) {
+            if (event.target === modal) closeModal();
+          });
+        }
+
+        document.addEventListener("keydown", function(event) {
+          if (event.key === "Escape" && modal && !modal.hasAttribute("hidden")) {
+            closeModal();
+          }
+        });
+      });
+    }
+
     onJump();
+    initProductGallery();
 
     window.addEventListener("load", function() {
+      initProductGallery();
       patchStackOptions();
       setTimeout(patchStackOptions, 350);
       setTimeout(patchStackOptions, 1200);
