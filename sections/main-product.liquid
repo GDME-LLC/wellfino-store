@@ -58,8 +58,6 @@
           <p class="wf-product-hero__short">{{ short_description }}</p>
         {% endif %}
 
-        <a class="wf-btn wf-btn--ghost wf-stack-jump" href="#stack-options" data-stack-scroll>View Stack Options</a>
-
         {% if is_stack_anchor %}
           <p class="wf-product-hero__availability-note">Stack availability depends on included items.</p>
         {% endif %}
@@ -85,21 +83,6 @@
     </div>
   </div>
 </section>
-
-{% if is_stack_anchor %}
-<section id="stack-options" class="wf-section wf-stack-options">
-  <div class="wf-wrap">
-    <div class="wf-section__head">
-      <h2 class="wf-section__title">Stack Options</h2>
-    </div>
-    <div class="wf-stack-options__card">
-      {% for block in section.blocks %}
-        {% render block %}
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
 
 {% assign stack_widget_fallback_image = 'stack-collage-placeholder.svg' | asset_url %}
 {% if product.featured_image %}
