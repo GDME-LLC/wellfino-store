@@ -173,6 +173,7 @@ a:hover{text-decoration:underline}
   position:absolute;
   left:12px;
   bottom:12px;
+  z-index:6;
   background:#fff;
   border:1px solid var(--wf-border);
   border-radius:8px;
@@ -376,12 +377,14 @@ a:hover{text-decoration:underline}
 .wf-product-card__media .wf-stack-collage{
   height:100%;
   aspect-ratio:auto;
-  --ground:72%;
-  --y-lift-d:-12;
-  --y-lift-m:-10;
+  --ground:70%;
+  --y-lift-d:-20;
+  --y-lift-m:-16;
+  --wf-scale-d:1.34;
+  --wf-scale-m:1.24;
 }
 .wf-product-card__media .wf-stack-collage__img--single{
-  transform:translate(-50%, -12%) scale(1) !important;
+  transform:translate(-50%, -20%) scale(1.22) !important;
 }
 .wf-stack-collage::after{
   content:"";
@@ -409,7 +412,7 @@ a:hover{text-decoration:underline}
   mix-blend-mode:normal;
   background:transparent !important;
   filter:contrast(1.03) saturate(1.04);
-  transform:translate(-50%, -100%) translate(calc(var(--u) * var(--x-d, 0)), calc(var(--u) * (var(--y-d, 0) + var(--y-lift-d, 0)))) scale(var(--s-d, 1));
+  transform:translate(-50%, -100%) translate(calc(var(--u) * var(--x-d, 0)), calc(var(--u) * (var(--y-d, 0) + var(--y-lift-d, 0)))) scale(calc(var(--s-d, 1) * var(--wf-scale-d, 1)));
   transform-origin:50% 100%;
   z-index:var(--z, 1);
   will-change:transform;
@@ -436,13 +439,13 @@ a:hover{text-decoration:underline}
   .wf-stack-collage__img{
     top:var(--ground);
     width:var(--w-m, var(--w-d, 44%));
-    transform:translate(-50%, -100%) translate(calc(var(--u) * var(--x-m, var(--x-d, 0))), calc(var(--u) * (var(--y-m, var(--y-d, 0)) + var(--y-lift-m, var(--y-lift-d, 0))))) scale(var(--s-m, var(--s-d, 1)));
+    transform:translate(-50%, -100%) translate(calc(var(--u) * var(--x-m, var(--x-d, 0))), calc(var(--u) * (var(--y-m, var(--y-d, 0)) + var(--y-lift-m, var(--y-lift-d, 0))))) scale(calc(var(--s-m, var(--s-d, 1)) * var(--wf-scale-m, var(--wf-scale-d, 1))));
   }
   .wf-stack-collage__img--single{
     transform:translate(-50%, var(--single-shift-m, var(--single-shift-d, 0%))) scale(1);
   }
   .wf-product-card__media .wf-stack-collage__img--single{
-    transform:translate(-50%, -10%) scale(1) !important;
+    transform:translate(-50%, -16%) scale(1.14) !important;
   }
 }
 .wf-stack-collage--pdp{
