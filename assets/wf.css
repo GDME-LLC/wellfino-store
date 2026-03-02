@@ -373,6 +373,11 @@ a:hover{text-decoration:underline}
 .wf-stack-collage--card{
   --ground:78%;
 }
+.wf-product-card__media .wf-stack-collage{
+  height:100%;
+  aspect-ratio:auto;
+  --ground:72%;
+}
 .wf-stack-collage::after{
   content:"";
   position:absolute;
