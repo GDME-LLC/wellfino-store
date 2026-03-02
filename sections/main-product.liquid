@@ -104,6 +104,7 @@
       "title": {{ stack_item.title | json }},
       "title_down": {{ stack_item.title | downcase | json }},
       "handle": {{ stack_item.handle | default: '' | downcase | json }},
+      "url": {% if stack_item.url %}{{ stack_item.url | json }}{% else %}""{% endif %},
       "image": {% if mapped_stack_item_image != blank %}{{ mapped_stack_item_image | json }}{% elsif stack_item.featured_image %}{{ stack_item.featured_image | image_url: width: 720 | json }}{% else %}{{ stack_widget_fallback_image | json }}{% endif %}
     }
   {%- endfor -%}
@@ -112,6 +113,7 @@
 {%- endcapture %}
 <script>
   (function() {
+    var isStackProduct = {{ is_stack_anchor | json }};
     var hiddenClass = "wf-stack-options__hidden-item";
     var stackItemImages = {{ stack_widget_images_json | strip_newlines }};
 
@@ -148,11 +150,16 @@
     }
 
     function findStackImageByContextText(text) {
+      var item = findStackItemByContextText(text);
+      return item ? (item.image || "") : "";
+    }
+
+    function findStackItemByContextText(text) {
       if (!stackItemImages || !stackItemImages.length) return "";
       var normalized = normalizeText(text);
-      if (!normalized) return "";
+      if (!normalized) return null;
 
-      var bestImage = "";
+      var bestItem = null;
       var bestScore = 0;
       for (var i = 0; i < stackItemImages.length; i++) {
         var item = stackItemImages[i] || {};
@@ -161,7 +168,7 @@
         var byTitle = itemTitle && (normalized.indexOf(itemTitle) !== -1 || itemTitle.indexOf(normalized) !== -1);
         var byHandle = itemHandle && normalized.indexOf(itemHandle) !== -1;
         if (byTitle || byHandle) {
-          return item.image || "";
+          return item;
         }
 
         var itemTokens = tokens(itemTitle + " " + itemHandle);
@@ -171,10 +178,39 @@
         }
         if (score > bestScore) {
           bestScore = score;
-          bestImage = item.image || "";
+          bestItem = item;
         }
       }
-      return bestScore >= 2 ? bestImage : "";
+      return bestScore >= 2 ? bestItem : null;
+    }
+
+    function ensureBundleLinks(target) {
+      if (!target || !stackItemImages || !stackItemImages.length) return;
+      var contexts = target.querySelectorAll("li, article, tr, [class*='product'], [class*='item'], [class*='bundle']");
+      contexts.forEach(function(node) {
+        if (!node || node.classList.contains(hiddenClass)) return;
+        var matched = findStackItemByContextText(node.textContent || "");
+        if (!matched || !matched.url) return;
+
+        var link = node.querySelector(".wf-stack-options__item-link");
+        if (!link) {
+          link = document.createElement("a");
+          link.className = "wf-stack-options__item-link";
+          link.textContent = "View product";
+          node.appendChild(link);
+        }
+        link.setAttribute("href", matched.url);
+      });
+    }
+
+    function moveStackOptionsToBottom() {
+      if (!isStackProduct) return;
+      var target = document.getElementById("stack-options");
+      var mainContent = document.getElementById("MainContent");
+      if (!target || !mainContent) return;
+      if (mainContent.lastElementChild !== target) {
+        mainContent.appendChild(target);
+      }
     }
 
     function patchStackOptions() {
@@ -215,19 +251,28 @@
         }
       });
 
+      ensureBundleLinks(target);
+
       // Keep Bundler output visible; previous broad selectors could hide the entire widget.
     }
 
     onJump();
 
     window.addEventListener("load", function() {
+      moveStackOptionsToBottom();
       patchStackOptions();
+      setTimeout(moveStackOptionsToBottom, 120);
       setTimeout(patchStackOptions, 350);
+      setTimeout(moveStackOptionsToBottom, 450);
       setTimeout(patchStackOptions, 1200);
+      setTimeout(moveStackOptionsToBottom, 1300);
       var target = document.getElementById("stack-options");
       if (!target) return;
-      var observer = new MutationObserver(function() { patchStackOptions(); });
-      observer.observe(target, { childList: true, subtree: true });
+      var observer = new MutationObserver(function() {
+        moveStackOptionsToBottom();
+        patchStackOptions();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
       setTimeout(function() { observer.disconnect(); }, 15000);
     });
   })();
