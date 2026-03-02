@@ -84,6 +84,21 @@
   </div>
 </section>
 
+{% if is_stack_anchor %}
+<section id="stack-options" class="wf-section wf-stack-options">
+  <div class="wf-wrap">
+    <div class="wf-section__head">
+      <h2 class="wf-section__title">Stack Options</h2>
+    </div>
+    <div class="wf-stack-options__card">
+      {% for block in section.blocks %}
+        {% render block %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
 {% assign stack_widget_fallback_image = 'stack-collage-placeholder.svg' | asset_url %}
 {% if product.featured_image %}
   {% assign stack_widget_fallback_image = product.featured_image | image_url: width: 800 %}
