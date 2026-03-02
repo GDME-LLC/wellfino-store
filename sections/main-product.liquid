@@ -7,6 +7,10 @@
     {% if product_type_down == 'stack' or product_tags_down contains 'stack' or product_title_down contains 'stack' or product_title_down contains 'system' %}
       {% assign is_stack_anchor = true %}
     {% endif %}
+    {% assign is_complete_system_stack = false %}
+    {% if is_stack_anchor and product_title_down contains 'complete system' %}
+      {% assign is_complete_system_stack = true %}
+    {% endif %}
 
     {% assign stack_display_price = product.metafields.custom.stack_display_price.value | default: product.metafields.custom.stack_display_price %}
     {% assign stack_requires_options = false %}
@@ -73,7 +77,7 @@
       <div class="wf-tile wf-product-hero__aside">
         <h1 class="wf-product-hero__title">{{ product.title }}</h1>
         {% if is_stack_anchor %}
-          <span class="wf-stack-badge">10% Stack Savings</span>
+          <span class="wf-stack-badge">{% if is_complete_system_stack %}15%{% else %}10%{% endif %} Stack Savings</span>
         {% endif %}
 
         <p class="wf-product-hero__price">
@@ -81,7 +85,7 @@
             {% if stack_display_price != blank %}
               From {{ stack_display_price | money }}
             {% else %}
-              10% savings &middot; Discount applied at checkout
+              {% if is_complete_system_stack %}15%{% else %}10%{% endif %} savings &middot; Discount applied at checkout
             {% endif %}
           {% else %}
             {{ product.price | money }}
