@@ -11,10 +11,6 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {}
-    },
-    "1771641758168fe1c3": {
-      "type": "wf-stack-options",
       "blocks": {
         "bundler_custom_bundle_6YPpwV": {
           "type": "shopify://apps/bundler/blocks/custom-bundle/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
@@ -30,7 +26,6 @@
     }
   },
   "order": [
-    "main",
-    "1771641758168fe1c3"
+    "main"
   ]
 }
