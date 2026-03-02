@@ -146,7 +146,7 @@ a:hover{text-decoration:underline}
   position:relative;
   border:1px solid var(--wf-border);
   border-radius:var(--wf-radius);
-  background:color-mix(in srgb, var(--wf-panel) 84%, #fff);
+  background:#fff;
   padding:16px;
   aspect-ratio:1/1;
   overflow:hidden;
@@ -156,7 +156,7 @@ a:hover{text-decoration:underline}
   height:100%;
   border-radius:10px;
   object-fit:cover;
-  mix-blend-mode:multiply;
+  mix-blend-mode:normal;
   display:block;
 }
 .wf-product-card__img--placeholder{
