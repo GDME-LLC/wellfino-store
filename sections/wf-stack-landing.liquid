@@ -1,10 +1,12 @@
 <section class="wf-section">
   <div class="wf-wrap">
-    <div data-stack-detail data-stack-handle="{{ page.handle }}" data-stacks-url="{{ 'stacks.json' | asset_url }}"></div>
+    <div class="wf-tile wf-quality">
+      <h1 class="wf-page-title">{{ page.title }}</h1>
+      <p class="wf-page-intro">This page is being refreshed. Browse the full catalog below.</p>
+      <a class="wf-btn wf-btn--primary" href="{{ routes.all_products_collection_url }}">Browse Catalog</a>
+    </div>
   </div>
 </section>
-
-{{ 'wf-stacks.js' | asset_url | script_tag }}
 
 {% schema %}
 {

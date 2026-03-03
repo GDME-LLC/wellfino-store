@@ -14,9 +14,9 @@
       "settings": {
         "kicker": "HOLY SHIT REMOVE THIS",
         "heading": "Shop Wellfino",
-        "subheading": "Curated supplements and stacks built for everyday performance.",
-        "primary_label": "Browse Stacks",
-        "primary_url": "/pages/stacks",
+        "subheading": "Curated supplements built for everyday performance.",
+        "primary_label": "Browse Catalog",
+        "primary_url": "/collections/all",
         "secondary_label": "Browse All",
         "secondary_url": "/collections/all",
         "back_link_label": "Back to Wellfino.com",
