@@ -98,6 +98,22 @@
 {% if has_stack_options == false and stack_tag_option_count > 0 %}
   {% assign has_stack_options = true %}
 {% endif %}
+{% assign collection_stack_option_count = 0 %}
+{% for rel_collection in product.collections %}
+  {% for collection_product in rel_collection.products %}
+    {% if collection_product.id != product.id %}
+      {% assign collection_product_type_down = collection_product.type | downcase %}
+      {% assign collection_product_title_down = collection_product.title | downcase %}
+      {% assign collection_product_tags_down = collection_product.tags | join: ',' | downcase %}
+      {% if collection_product_type_down == 'stack' or collection_product_tags_down contains 'stack' or collection_product_title_down contains 'stack' or collection_product_title_down contains 'system' %}
+        {% assign collection_stack_option_count = collection_stack_option_count | plus: 1 %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+{% if has_stack_options == false and collection_stack_option_count > 0 %}
+  {% assign has_stack_options = true %}
+{% endif %}
 
 {% if has_stack_options %}
 <section id="stack-options" class="wf-section">
@@ -108,15 +124,24 @@
     <div class="wf-tile">
       <p class="wf-page-intro">Pair this product with these stack products:</p>
       <div class="wf-hero__cta">
+        {% assign rendered_stack_handles = '|' %}
         {% if stack_options_list != blank %}
           {% for stack_product in stack_options_list %}
             {% if stack_product != blank and stack_product.url != blank %}
-              <a class="wf-btn wf-btn--primary" href="{{ stack_product.url }}">{{ stack_product.title }}</a>
+              {% capture stack_product_token %}|{{ stack_product.handle }}|{% endcapture %}
+              {% unless rendered_stack_handles contains stack_product_token %}
+                <a class="wf-btn wf-btn--primary" href="{{ stack_product.url }}">{{ stack_product.title }}</a>
+                {% assign rendered_stack_handles = rendered_stack_handles | append: stack_product.handle | append: '|' %}
+              {% endunless %}
             {% endif %}
           {% endfor %}
         {% endif %}
         {% if stack_option_single != blank and stack_option_single.url != blank %}
-          <a class="wf-btn wf-btn--primary" href="{{ stack_option_single.url }}">{{ stack_option_single.title }}</a>
+          {% capture stack_option_single_token %}|{{ stack_option_single.handle }}|{% endcapture %}
+          {% unless rendered_stack_handles contains stack_option_single_token %}
+            <a class="wf-btn wf-btn--primary" href="{{ stack_option_single.url }}">{{ stack_option_single.title }}</a>
+            {% assign rendered_stack_handles = rendered_stack_handles | append: stack_option_single.handle | append: '|' %}
+          {% endunless %}
         {% endif %}
         {% for tag in product.tags %}
           {% assign tag_down = tag | downcase %}
@@ -124,9 +149,29 @@
             {% assign stack_handle = tag_down | remove: 'stack:' | strip %}
             {% assign stack_product_by_tag = all_products[stack_handle] %}
             {% if stack_product_by_tag != blank %}
-              <a class="wf-btn wf-btn--primary" href="{{ stack_product_by_tag.url }}">{{ stack_product_by_tag.title }}</a>
+              {% capture stack_product_by_tag_token %}|{{ stack_product_by_tag.handle }}|{% endcapture %}
+              {% unless rendered_stack_handles contains stack_product_by_tag_token %}
+                <a class="wf-btn wf-btn--primary" href="{{ stack_product_by_tag.url }}">{{ stack_product_by_tag.title }}</a>
+                {% assign rendered_stack_handles = rendered_stack_handles | append: stack_product_by_tag.handle | append: '|' %}
+              {% endunless %}
             {% endif %}
           {% endif %}
+        {% endfor %}
+        {% for rel_collection in product.collections %}
+          {% for collection_product in rel_collection.products %}
+            {% if collection_product.id != product.id %}
+              {% assign collection_product_type_down = collection_product.type | downcase %}
+              {% assign collection_product_title_down = collection_product.title | downcase %}
+              {% assign collection_product_tags_down = collection_product.tags | join: ',' | downcase %}
+              {% if collection_product_type_down == 'stack' or collection_product_tags_down contains 'stack' or collection_product_title_down contains 'stack' or collection_product_title_down contains 'system' %}
+                {% capture collection_stack_token %}|{{ collection_product.handle }}|{% endcapture %}
+                {% unless rendered_stack_handles contains collection_stack_token %}
+                  <a class="wf-btn wf-btn--primary" href="{{ collection_product.url }}">{{ collection_product.title }}</a>
+                  {% assign rendered_stack_handles = rendered_stack_handles | append: collection_product.handle | append: '|' %}
+                {% endunless %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
         {% endfor %}
       </div>
     </div>
