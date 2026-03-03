@@ -6,11 +6,18 @@
 
     <div class="wf-grid wf-product-grid">
       {% for product in collection.products %}
+        {% assign product_type_down = product.type | downcase %}
+        {% assign product_title_down = product.title | downcase %}
+        {% assign product_tags_down = product.tags | join: ',' | downcase %}
+        {% assign is_stack_product = false %}
+        {% if product_type_down == 'stack' or product_tags_down contains 'stack' or product_title_down contains 'stack' or product_title_down contains 'system' %}
+          {% assign is_stack_product = true %}
+        {% endif %}
         <a class="wf-product-card" href="{{ product.url }}">
           <div class="wf-product-card__media">
             {% if product.featured_image %}
               <img
-                class="wf-product-card__img"
+                class="wf-product-card__img{% if is_stack_product %} wf-product-card__img--stack{% endif %}"
                 src="{{ product.featured_image | image_url: width: 720 }}"
                 alt="{{ product.featured_image.alt | default: product.title | escape }}"
                 loading="lazy">

@@ -82,6 +82,58 @@
   </div>
 </section>
 
+{% assign stack_options_list = product.metafields.custom.associated_stacks.value | default: product.metafields.custom.stack_options.value %}
+{% assign stack_option_single = product.metafields.custom.associated_stack.value | default: product.metafields.custom.associated_stack %}
+{% assign has_stack_options = false %}
+{% if stack_options_list != blank or stack_option_single != blank %}
+  {% assign has_stack_options = true %}
+{% endif %}
+{% assign stack_tag_option_count = 0 %}
+{% for tag in product.tags %}
+  {% assign tag_down = tag | downcase %}
+  {% if tag_down contains 'stack:' %}
+    {% assign stack_tag_option_count = stack_tag_option_count | plus: 1 %}
+  {% endif %}
+{% endfor %}
+{% if has_stack_options == false and stack_tag_option_count > 0 %}
+  {% assign has_stack_options = true %}
+{% endif %}
+
+{% if has_stack_options %}
+<section id="stack-options" class="wf-section">
+  <div class="wf-wrap">
+    <div class="wf-section__head">
+      <h2 class="wf-section__title">Stack Options</h2>
+    </div>
+    <div class="wf-tile">
+      <p class="wf-page-intro">Pair this product with these stack products:</p>
+      <div class="wf-hero__cta">
+        {% if stack_options_list != blank %}
+          {% for stack_product in stack_options_list %}
+            {% if stack_product != blank and stack_product.url != blank %}
+              <a class="wf-btn wf-btn--primary" href="{{ stack_product.url }}">{{ stack_product.title }}</a>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if stack_option_single != blank and stack_option_single.url != blank %}
+          <a class="wf-btn wf-btn--primary" href="{{ stack_option_single.url }}">{{ stack_option_single.title }}</a>
+        {% endif %}
+        {% for tag in product.tags %}
+          {% assign tag_down = tag | downcase %}
+          {% if tag_down contains 'stack:' %}
+            {% assign stack_handle = tag_down | remove: 'stack:' | strip %}
+            {% assign stack_product_by_tag = all_products[stack_handle] %}
+            {% if stack_product_by_tag != blank %}
+              <a class="wf-btn wf-btn--primary" href="{{ stack_product_by_tag.url }}">{{ stack_product_by_tag.title }}</a>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <script>
   (function() {
     function initProductGallery() {

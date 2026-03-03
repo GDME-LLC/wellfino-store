@@ -159,6 +159,10 @@ a:hover{text-decoration:underline}
   mix-blend-mode:normal;
   display:block;
 }
+.wf-product-card__img--stack{
+  object-fit:contain;
+  background:#fff;
+}
 .wf-product-card__img--placeholder{
   display:flex;
   align-items:center;
