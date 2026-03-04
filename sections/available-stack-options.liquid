@@ -2,6 +2,9 @@
 {% if request.query_string != blank and request.query_string contains 'debug_stacks=1' %}
   {% assign debug_stacks = true %}
 {% endif %}
+{% if section.settings.debug_mode %}
+  {% assign debug_stacks = true %}
+{% endif %}
 
 {% assign related_stack_handles = '|' %}
 {% assign related_stack_count = 0 %}
@@ -47,12 +50,12 @@
     {% assign stack_handle = tag_down | remove: 'stacks:' | strip %}
   {% endif %}
   {% if stack_handle != blank %}
-    {% assign stack_from_tag = all_products[stack_handle] %}
     {% if matched_stack_tags == blank %}
       {% assign matched_stack_tags = tag %}
     {% else %}
       {% assign matched_stack_tags = matched_stack_tags | append: ', ' | append: tag %}
     {% endif %}
+    {% assign stack_from_tag = all_products[stack_handle] %}
     {% if stack_from_tag != blank and stack_from_tag.id != product.id %}
       {% capture token %}|{{ stack_from_tag.handle }}|{% endcapture %}
       {% unless related_stack_handles contains token %}
@@ -69,119 +72,26 @@
 {% assign stack_options_raw = product.metafields.custom.stack_options.value | default: product.metafields.custom.stack_options %}
 {% assign associated_stack_raw = product.metafields.custom.associated_stack.value | default: product.metafields.custom.associated_stack %}
 
-{% if associated_stacks_raw != blank %}
-  {% if associated_stacks_raw.url != blank and associated_stacks_raw.id != product.id %}
-    {% capture token %}|{{ associated_stacks_raw.handle }}|{% endcapture %}
-    {% unless related_stack_handles contains token %}
-      {% assign related_stack_handles = related_stack_handles | append: associated_stacks_raw.handle | append: '|' %}
-      {% assign related_stack_count = related_stack_count | plus: 1 %}
-      {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
+{% assign associated_stacks_text = associated_stacks_raw | append: '' | downcase | replace: '/products/', '' | replace: '|', ',' | replace: ';', ',' %}
+{% assign stack_options_text = stack_options_raw | append: '' | downcase | replace: '/products/', '' | replace: '|', ',' | replace: ';', ',' %}
+{% assign associated_stack_text = associated_stack_raw | append: '' | downcase | replace: '/products/', '' | replace: '|', ',' | replace: ';', ',' %}
+{% assign metafield_handles_text = associated_stacks_text | append: ',' | append: stack_options_text | append: ',' | append: associated_stack_text %}
+{% for stack_handle in metafield_handles_text | split: ',' %}
+  {% assign stack_handle = stack_handle | strip %}
+  {% if stack_handle != blank %}
+    {% unless stack_handle contains 'gid://' %}
+      {% assign stack_from_meta = all_products[stack_handle] %}
+      {% if stack_from_meta != blank and stack_from_meta.id != product.id %}
+        {% capture token %}|{{ stack_from_meta.handle }}|{% endcapture %}
+        {% unless related_stack_handles contains token %}
+          {% assign related_stack_handles = related_stack_handles | append: stack_from_meta.handle | append: '|' %}
+          {% assign related_stack_count = related_stack_count | plus: 1 %}
+          {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
+        {% endunless %}
+      {% endif %}
     {% endunless %}
   {% endif %}
-  {% for stack_ref in associated_stacks_raw %}
-    {% if stack_ref != blank and stack_ref.url != blank and stack_ref.id != product.id %}
-      {% capture token %}|{{ stack_ref.handle }}|{% endcapture %}
-      {% unless related_stack_handles contains token %}
-        {% assign related_stack_handles = related_stack_handles | append: stack_ref.handle | append: '|' %}
-        {% assign related_stack_count = related_stack_count | plus: 1 %}
-        {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
-      {% endunless %}
-    {% endif %}
-  {% endfor %}
-  {% assign associated_stacks_text = associated_stacks_raw | append: '' | downcase | replace: '/products/', '' | replace: '|', ',' | replace: ';', ',' %}
-  {% for stack_handle in associated_stacks_text | split: ',' %}
-    {% assign stack_handle = stack_handle | strip %}
-    {% if stack_handle != blank %}
-      {% unless stack_handle contains 'gid://' %}
-        {% assign stack_from_meta = all_products[stack_handle] %}
-        {% if stack_from_meta != blank and stack_from_meta.id != product.id %}
-          {% capture token %}|{{ stack_from_meta.handle }}|{% endcapture %}
-          {% unless related_stack_handles contains token %}
-            {% assign related_stack_handles = related_stack_handles | append: stack_from_meta.handle | append: '|' %}
-            {% assign related_stack_count = related_stack_count | plus: 1 %}
-            {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
-          {% endunless %}
-        {% endif %}
-      {% endunless %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
-{% if stack_options_raw != blank %}
-  {% if stack_options_raw.url != blank and stack_options_raw.id != product.id %}
-    {% capture token %}|{{ stack_options_raw.handle }}|{% endcapture %}
-    {% unless related_stack_handles contains token %}
-      {% assign related_stack_handles = related_stack_handles | append: stack_options_raw.handle | append: '|' %}
-      {% assign related_stack_count = related_stack_count | plus: 1 %}
-      {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
-    {% endunless %}
-  {% endif %}
-  {% for stack_ref in stack_options_raw %}
-    {% if stack_ref != blank and stack_ref.url != blank and stack_ref.id != product.id %}
-      {% capture token %}|{{ stack_ref.handle }}|{% endcapture %}
-      {% unless related_stack_handles contains token %}
-        {% assign related_stack_handles = related_stack_handles | append: stack_ref.handle | append: '|' %}
-        {% assign related_stack_count = related_stack_count | plus: 1 %}
-        {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
-      {% endunless %}
-    {% endif %}
-  {% endfor %}
-  {% assign stack_options_text = stack_options_raw | append: '' | downcase | replace: '/products/', '' | replace: '|', ',' | replace: ';', ',' %}
-  {% for stack_handle in stack_options_text | split: ',' %}
-    {% assign stack_handle = stack_handle | strip %}
-    {% if stack_handle != blank %}
-      {% unless stack_handle contains 'gid://' %}
-        {% assign stack_from_meta = all_products[stack_handle] %}
-        {% if stack_from_meta != blank and stack_from_meta.id != product.id %}
-          {% capture token %}|{{ stack_from_meta.handle }}|{% endcapture %}
-          {% unless related_stack_handles contains token %}
-            {% assign related_stack_handles = related_stack_handles | append: stack_from_meta.handle | append: '|' %}
-            {% assign related_stack_count = related_stack_count | plus: 1 %}
-            {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
-          {% endunless %}
-        {% endif %}
-      {% endunless %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
-{% if associated_stack_raw != blank %}
-  {% if associated_stack_raw.url != blank and associated_stack_raw.id != product.id %}
-    {% capture token %}|{{ associated_stack_raw.handle }}|{% endcapture %}
-    {% unless related_stack_handles contains token %}
-      {% assign related_stack_handles = related_stack_handles | append: associated_stack_raw.handle | append: '|' %}
-      {% assign related_stack_count = related_stack_count | plus: 1 %}
-      {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
-    {% endunless %}
-  {% endif %}
-  {% for stack_ref in associated_stack_raw %}
-    {% if stack_ref != blank and stack_ref.url != blank and stack_ref.id != product.id %}
-      {% capture token %}|{{ stack_ref.handle }}|{% endcapture %}
-      {% unless related_stack_handles contains token %}
-        {% assign related_stack_handles = related_stack_handles | append: stack_ref.handle | append: '|' %}
-        {% assign related_stack_count = related_stack_count | plus: 1 %}
-        {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
-      {% endunless %}
-    {% endif %}
-  {% endfor %}
-  {% assign associated_stack_text = associated_stack_raw | append: '' | downcase | replace: '/products/', '' | replace: '|', ',' | replace: ';', ',' %}
-  {% for stack_handle in associated_stack_text | split: ',' %}
-    {% assign stack_handle = stack_handle | strip %}
-    {% if stack_handle != blank %}
-      {% unless stack_handle contains 'gid://' %}
-        {% assign stack_from_meta = all_products[stack_handle] %}
-        {% if stack_from_meta != blank and stack_from_meta.id != product.id %}
-          {% capture token %}|{{ stack_from_meta.handle }}|{% endcapture %}
-          {% unless related_stack_handles contains token %}
-            {% assign related_stack_handles = related_stack_handles | append: stack_from_meta.handle | append: '|' %}
-            {% assign related_stack_count = related_stack_count | plus: 1 %}
-            {% assign metafield_stack_count = metafield_stack_count | plus: 1 %}
-          {% endunless %}
-        {% endif %}
-      {% endunless %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
+{% endfor %}
 
 <section id="stack-options" class="wf-section">
   <div class="wf-wrap">
@@ -224,9 +134,9 @@
         <div class="wf-product-hero__option-note" style="margin-top:10px;">
           <strong>Debug stack discovery</strong><br>
           product.handle: {{ product.handle }}<br>
+          product.type: {{ product.type }}<br>
           product.tags: {% if product.tags.size > 0 %}{{ product.tags | join: ', ' }}{% else %}none{% endif %}<br>
           matched stack tags: {% if matched_stack_tags != blank %}{{ matched_stack_tags }}{% else %}none{% endif %}<br>
-          product.type: {{ product.type }}<br>
           product.collections count: {{ collection_count }}<br>
           product.collections handles: {% if collection_handles != blank %}{{ collection_handles }}{% else %}none{% endif %}<br>
           custom.associated_stacks: {% if associated_stacks_raw != blank %}{{ associated_stacks_raw }}{% else %}blank{% endif %}<br>
@@ -246,6 +156,8 @@
 {% schema %}
 {
   "name": "Available stack options",
-  "settings": []
+  "settings": [
+    { "type": "checkbox", "id": "debug_mode", "label": "Debug mode", "default": false }
+  ]
 }
 {% endschema %}
