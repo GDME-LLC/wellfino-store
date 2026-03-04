@@ -13,13 +13,13 @@
       "type": "main-product",
       "settings": {}
     },
-    "stack_options": {
-      "type": "wf-stack-options",
+    "available_stack_options": {
+      "type": "available-stack-options",
       "settings": {}
     }
   },
   "order": [
     "main",
-    "stack_options"
+    "available_stack_options"
   ]
 }
