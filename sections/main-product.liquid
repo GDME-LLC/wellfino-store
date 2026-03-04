@@ -100,7 +100,8 @@
 {% endif %}
 {% assign collection_stack_option_count = 0 %}
 {% for rel_collection in product.collections %}
-  {% for collection_product in rel_collection.products %}
+  {% assign rel_collection_products = collections[rel_collection.handle].products %}
+  {% for collection_product in rel_collection_products %}
     {% if collection_product.id != product.id %}
       {% assign collection_product_type_down = collection_product.type | downcase %}
       {% assign collection_product_title_down = collection_product.title | downcase %}
@@ -158,7 +159,8 @@
           {% endif %}
         {% endfor %}
         {% for rel_collection in product.collections %}
-          {% for collection_product in rel_collection.products %}
+          {% assign rel_collection_products = collections[rel_collection.handle].products %}
+          {% for collection_product in rel_collection_products %}
             {% if collection_product.id != product.id %}
               {% assign collection_product_type_down = collection_product.type | downcase %}
               {% assign collection_product_title_down = collection_product.title | downcase %}
