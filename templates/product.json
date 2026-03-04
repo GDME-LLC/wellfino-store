@@ -12,9 +12,14 @@
     "main": {
       "type": "main-product",
       "settings": {}
+    },
+    "stack_options": {
+      "type": "wf-stack-options",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "stack_options"
   ]
 }
